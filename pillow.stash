@@ -1,0 +1,196 @@
+# <#>Pillow<> SpeedSheet
+<b>What you need, faster.<>
+
+
+# Summary
+
+A current, maintained version if PIL.
+
+
+### Links
+
+Official:
+<l>https://pillow.readthedocs.io/en/stable/index.html<>
+
+Source:
+<l>https://github.com/python-pillow/Pillow<>
+
+Pypi:
+<l>https://pypi.org/project/Pillow/<>
+
+
+
+### Install
+
+<cb>pip3 install Pillow<>
+
+
+
+# Image
+
+
+
+### Effect - Gradient Background
+
+Stack Overflow:
+<l>https://stackoverflow.com/questions/32530345/pil-generating-vertical-gradient-image<>
+
+Or Simpler(?):
+<l>https://gist.github.com/weihanglo/1e754ec47fdd683a42fdf6a272904535<>
+
+
+
+### Image File - Read
+
+<cb>from PIL import Image<>
+
+<cb>= Image.open (<v>image_path<>)<>
+
+
+Returns: <!>?<>  |  <c>PIL.JpegImagePlugin.JpegImageFile<>
+@
+@ .open(), load
+
+
+
+### Image File - Write
+
+<><v>image<>.save(<v>file_path<>)<>
+
+
+The file name extension determines the file format used.
+
+
+Example:
+
+<cb><v>image<>.save("<v>images/new_image.png<>")<>
+@
+@ .save(), save
+
+
+
+### Image - Convert - From Array
+
+<cb>from PIL import Image
+
+= Image.fromarray(<v>list_1<>)<>
+
+<m>(Test with example)
+
+See:
+<l>https://stackoverflow.com/questions/14452824/how-can-i-save-an-image-with-pil<><>
+@
+@ Image.fromarray(), .fromarray()
+
+
+
+### Image Edit - Crop
+
+<cb>= image.crop((<v>left<>, <v>top<>, <v>right_plus_one<>, <v>bottom_plus_one<>))<>
+
+or
+
+<cb><v>dimensions<> = (<v>left<>, <v>top<>, <v>right_plus_one<>, <v>bottom_plus_one<>)
+= image.crop(<v>dimensions<>)<>
+
+
+Returns: <c>PIL.Image.Image<>
+
+
+Example:
+
+<cb><v>dimensions<> = (<v>10<>, <v>5<>, <v>30<>, <v>15<>)
+<v>cropped<> = image.crop(<v>crop_box<>)<>
+
+Returns Blue Box (Size 20 x 10):
+
+<image "Image - Crop.png">
+@
+@ .crop()
+
+
+
+### Image Edit - Resize
+
+<cb><v>image_1<>.resize((<v>width<>, <v>height<>), <v>resize_algorithm<>)		<#>#1<><>
+
+
+Returns: <c>PIL.Image.Image<>
+
+
+<c><v>resize_algorithm<><>  -	<c>Image.LANCZOS<>
+					<c>...<>
+
+
+\#1  -  <c><v>width<><> and <c><v>height<><> must be integers.
+
+
+Exapmle:
+
+<cb><v>resized<> = <v>image_1<>.resize((160, 90), Image.LANCZOS)<>
+
+
+### Image Edit - Rotate
+
+<cb>= <v>image_1<>.rotate(<v>degrees<>)<>
+
+
+Returns: <!>?<>  |  <c>PIL.JpegImagePlugin.JpegImageFile<>
+
+
+
+### Image Properties - Height
+
+<cb>= <v>image<>.size[1]<>
+
+
+
+### Image Properties - Width
+
+<cb>= <v>image<>.size[0]<>
+
+
+
+### Image - Overlay
+
+Convert Both to "RGBA":
+
+<cb>= <v>image_1<>.convert("RGBA")<>
+
+Blend Together:
+
+<cb>= Image.blend(<v>background_image<>, <v>overlay_image<>, 0.5)<>
+
+<m>What does <v>0.5<> do? No idea. Figure that out<>
+
+Stack Overflow:
+<l>https://stackoverflow.com/questions/10640114/overlay-two-same-sized-images-in-python/44749818<>
+@
+@ Image.blend(), .blend()
+
+
+
+### Image - View
+
+<cb><v>image<>.show()<>
+
+Shows the image in using the default OS viewer.
+
+@
+@ .show(), show, display
+
+
+
+# How To
+
+@ how-to
+
+
+# Acronyms
+
+### PIL
+Python Image Library
+
+
+
+# Terms
