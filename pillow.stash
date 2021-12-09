@@ -20,9 +20,17 @@ Pypi:
 
 
 
-### Install
+### Install - PIP
 
 <cb>pip3 install Pillow<>
+
+
+
+### Install - PIP Requirements.txt
+
+Add:
+
+<cb>Pillow<>
 
 
 
@@ -42,9 +50,13 @@ Or Simpler(?):
 
 ### Image File - Read
 
-<cb>from PIL import Image<>
+<cb>= Image.open()<>
 
-<cb>= Image.open (<v>image_path<>)<>
+Full Form:
+
+<cb>from PIL import Image
+
+= Image.open(<v>image_path<>)<>
 
 
 Returns: <!>?<>  |  <c>PIL.JpegImagePlugin.JpegImageFile<>
@@ -71,6 +83,10 @@ Example:
 
 ### Image - Convert - From Array
 
+<cb>= Image.fromarray()<>
+
+Full Form:
+
 <cb>from PIL import Image
 
 = Image.fromarray(<v>list_1<>)<>
@@ -81,6 +97,134 @@ See:
 <l>https://stackoverflow.com/questions/14452824/how-can-i-save-an-image-with-pil<><>
 @
 @ Image.fromarray(), .fromarray()
+
+
+
+### Image - Create
+
+<cb>= Image.new()<>
+
+Full Form:
+
+<cb>from PIL import Image
+
+= Image.new(<v>mode<>, <v>size<>)<>
+
+<cb>= Image.new(<v>mode<>, <v>size<>, <v>color<>)<>
+
+<table><col><c>mode<><><col>(string)<><col><code>'RGB'
+'RGBA'<><>
+<col> <>
+<col><c>size<><><col>(tuple)<><col><code>(<v>width<>, <v>height<>)<><>
+<col> <>
+<col>color<><col>(tuple)<><col><code>(<v>red<>, <v>blue<>, <v>green<>)
+(<v>red<>, <v>blue<>, <v>green<>, <v>alpha<>)<><><>
+
+
+Creates a new image of the given size and color.
+
+
+Examples:
+
+<cb>from PIL import Image
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>))
+<v>image<>.show()<>
+
+Colored Black:
+
+<cb>from PIL import Image
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (0,0,0))
+<v>image<>.show()<>
+@
+@ new, pil.image.new(), image.new(), .new()
+
+
+
+### Image Draw - Line
+
+<cb>draw.line()<>
+
+Full Form:
+
+<cb>from PIL import ImageDraw
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+
+<v>draw<>.line(<v>dimensions<>, <v>fill_color<>)<>
+
+<cb><v>draw<>.line(<v>dimensions<>, <v>fill_color<>, <v>width<>)<>
+
+<cb><v>draw<>.line(<v>dimensions<>, fill = <v>fill_color<>, width = <v>width<>)<>
+
+
+<table><col><c>dimensions<><><col>(tuple)<><col><code>(<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
+((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
+
+(pick either form)<><>
+
+
+Draws a line in the image.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.line((10, 10, 150, 90), (127, 255, 127))
+
+<v>image<>.show()<>
+@
+@ fill, box
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .rectangle()
+
+
+
+### Image Draw - Rectangle
+
+<cb>draw.rectangle()<>
+
+Full Form:
+
+<cb>from PIL import ImageDraw
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+
+<v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>)<>
+
+<cb><v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>, <v>outline_color<>)<>
+
+<cb><v>draw<>.rectangle(<v>dimensions<>, fill = <v>fill_color<>, outline = <v>outline_color<>)<>
+
+
+<table><col><c>dimensions<><><col>(tuple)<><col><code>(<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
+((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
+
+(pick either form)<><>
+
+
+Fills in a rectangular area in the image.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.rectangle((10, 10, 150, 90), (127, 255, 127))
+
+<v>image<>.show()<>
+@
+@ fill, box
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .rectangle()
 
 
 
@@ -139,13 +283,21 @@ Returns: <!>?<>  |  <c>PIL.JpegImagePlugin.JpegImageFile<>
 
 
 
-### Image Properties - Height
+### Image Properties - Size
+
+<cb>= <v>image<>.size<>
+
+Returns: <c>tuple (width, height)<>
+
+
+
+### Image Properties - Size, Height
 
 <cb>= <v>image<>.size[1]<>
 
 
 
-### Image Properties - Width
+### Image Properties - Size, Width
 
 <cb>= <v>image<>.size[0]<>
 
@@ -181,9 +333,88 @@ Shows the image in using the default OS viewer.
 
 
 
+# Tools
+
+
+### Color - Get RGB From Hex Value
+
+<cb>= ImageColor.getrgb()<>
+
+<cb>from PIL import ImageColor
+
+= ImageColor.getrgb('#<v>hex_value<>')<>
+
+
+Example:
+
+<cb>from PIL import ImageColor
+
+<v>MAGENTA<> = ImageColor.getrgb('#<v>FF00FF<>')<>
+@
+@ named
+
+
+
+### Color - Get RGB From Name
+
+<cb>= ImageColor.getrgb()<>
+
+<cb>from PIL import ImageColor
+
+= ImageColor.getrgb('<v>color_name<>')<>
+
+
+Example:
+
+<cb>from PIL import ImageColor
+
+<v>GREEN<> = ImageColor.getrgb('<v>green<>')<>
+@
+@ named
+
+
+
 # How To
 
 @ how-to
+
+
+
+# Reference - Types
+
+
+### Color Type
+
+<cb>= (<v>red<>, <v>green<>, <v>blue<>)<>
+
+<cb>= (<v>red<>, <v>green<>, <v>blue<>, <v>alpha<>)<><>
+
+Color is a three or four value tuple.
+All values range from 0 to 255.
+
+
+Example:
+
+<cb><v>magenta<> = (<v>255<>, <v>0<>, <v>255<>)<>
+
+50% Opacity:
+
+<cb><v>magenta<> = (<v>255<>, <v>0<>, <v>255<>, <v>127<>)<>
+
+
+
+### Size Type
+
+<cb>= (<v>width<>, <v>height<>)<>
+
+Size is a two value tuple.
+Defines the size of the image in pixels.
+
+
+Example:
+
+<cb>size = (<v>160<>, <v>100<>)<>
+
 
 
 # Acronyms
