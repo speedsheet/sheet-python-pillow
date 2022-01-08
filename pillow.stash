@@ -67,7 +67,7 @@ Returns: <!>?<>  |  <c>PIL.JpegImagePlugin.JpegImageFile<>
 
 ### Image File - Write
 
-<><v>image<>.save(<v>file_path<>)<>
+<cb><v>image<>.save(<v>file_path<>)<>
 
 
 The file name extension determines the file format used.
@@ -75,9 +75,56 @@ The file name extension determines the file format used.
 
 Example:
 
-<cb><v>image<>.save("<v>images/new_image.png<>")<>
+<cb>from PIL import Image, ImageDraw
+
+image = Image.new('RGBA', (160, 100), (127, 255, 0))
+<v>image<>.save("<v>new_image.png<>")<>
 @
 @ .save(), save
+
+
+
+### Image File - Write Animated
+
+<cb><v>images<>[0].save(
+		<v>file_name<>,
+		append_images = <v>images<>[1:],
+		duration = <v>milliseconds<>,
+		loop = 0,
+		save_all = True,
+		optimize = True)<>
+
+
+Writes a list of images assan animated image file for types gif and webp.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+def add_square(<v>image<>, dimensions):
+	draw = ImageDraw.Draw(<v>image<>)
+	draw.ellipse(dimensions, (255, 255, 0, 255))
+	return <v>image<>
+
+<v>background<> = Image.new('RGBA', (<v>100<>, <v>100<>), (<v>30<>, <v>30<>, <v>25<>))
+
+<v>image_1<> = add_square(<v>background<>.copy(), (<v>10<>, <v>10<>, <v>50<>, <v>50<>))
+<v>image_2<> = add_square(<v>background<>.copy(), (<v>30<>, <v>30<>, <v>70<>, <v>70<>))
+<v>image_3<> = add_square(<v>background<>.copy(), (<v>50<>, <v>50<>, <v>90<>, <v>90<>))
+
+<v>images<> = [<v>image_1<>, <v>image_2<>, <v>image_3<>]
+
+<v>images<>[0].save(
+		"<v>squared.gif<>",
+		append_images = <v>images<>[1:],
+		duration = <v>50<>,
+		loop = 0,
+		save_all = True,
+		optimize = True)<>
+@
+@ .save(), save
+@ gif, webp
 
 
 
@@ -142,9 +189,78 @@ Colored Black:
 
 
 
+### Image - Copy
+
+<cb>= <v>image_1<>.copy()<>
+
+
+Creates a copy of the image.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image_1<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+<v>draw<>.rectangle((10, 10, 150, 90), (127, 255, 127))
+
+<v>image_2<> = <v>image_1<>.copy()
+
+<v>image_2<>.show()<>
+@
+@ image.copy(), .copy()
+
+
+
+### Image Draw - Ellipse
+
+<cb>draw.ellipse(<v>dimensions<>, <v>fill_color<>)<>
+
+Full Form:
+
+<cb>from PIL import ImageDraw
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+
+<v>draw<>.ellipse(<v>dimensions<>, <v>fill_color<>)<>
+
+<cb><v>draw<>.ellipse(<v>dimensions<>, <v>fill_color<>, <v>outline_color<>)<>
+
+<cb><v>draw<>.ellipse(<v>dimensions<>, fill = <v>fill_color<>, outline = <v>outline_color<>)<>
+
+
+<c><v>dimensions<><> (tuple):
+
+<cb>= (<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
+= ((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
+
+
+Fills in a rectangular area in the image.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.ellipse((10, 10, 150, 90), (127, 255, 127))
+
+<v>image<>.show()<>
+
+@
+@ fill, circle
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .eclipse()
+
+
+
 ### Image Draw - Line
 
-<cb>draw.line()<>
+<cb>draw.line(<v>dimensions<>, <v>fill_color<>)<>
 
 Full Form:
 
@@ -159,10 +275,10 @@ Full Form:
 <cb><v>draw<>.line(<v>dimensions<>, fill = <v>fill_color<>, width = <v>width<>)<>
 
 
-<table><col><c>dimensions<><><col>(tuple)<><col><code>(<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
-((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
+<c><v>dimensions<><> (tuple):
 
-(pick either form)<><>
+<cb>= (<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
+= ((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
 
 
 Draws a line in the image.
@@ -181,13 +297,13 @@ Example:
 @
 @ fill, box
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .rectangle()
+@ .line()
 
 
 
 ### Image Draw - Rectangle
 
-<cb>draw.rectangle()<>
+<cb>draw.rectangle(<v>dimensions<>, <v>fill_color<>)<>
 
 Full Form:
 
@@ -202,10 +318,10 @@ Full Form:
 <cb><v>draw<>.rectangle(<v>dimensions<>, fill = <v>fill_color<>, outline = <v>outline_color<>)<>
 
 
-<table><col><c>dimensions<><><col>(tuple)<><col><code>(<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
-((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
+<c><v>dimensions<><> (tuple):
 
-(pick either form)<><>
+<cb>= (<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
+= ((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
 
 
 Fills in a rectangular area in the image.
@@ -222,7 +338,7 @@ Example:
 
 <v>image<>.show()<>
 @
-@ fill, box
+@ fill, box, square
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
 @ .rectangle()
 
@@ -414,6 +530,120 @@ Defines the size of the image in pixels.
 Example:
 
 <cb>size = (<v>160<>, <v>100<>)<>
+
+
+
+# Reference - Types as Named Tuples
+
+Named tuples can be used to make the values easier to work with.
+Here are the principle data types defined as named tuples.
+@
+@ namedtuple
+
+
+### Named Tuples - All
+
+<cb>from collections import namedtuple
+
+<v>AlphaColor<> = namedtuple("AlphaColor", ["red", "green", "blue", "alpha"])
+<v>Color<> = namedtuple("AlphaColor", ["red", "green", "blue"])
+
+<v>Point<> = namedtuple("Point", ["x", "y"])
+<v>Size<> = namedtuple("Size", ["width", "height"])
+<v>Dimensions<> = namedtuple("Dimensions", ["x1", "y1", "x2", "y2"])<>
+
+
+
+### Named Tuple - Alpha Color
+
+Define Type:
+
+<cb>from collections import namedtuple
+
+<v>AlphaColor<> = namedtuple("AlphaColor", ["red", "green", "blue", "alpha"])<>
+
+Use:
+
+<cb><v>yellow<> = AlphaColor(<v>255<>, <v>255<>, <v>0<>, <v>255<>)
+<v>transparent<> = AlphaColor(<v>0<>, <v>0<>, <v>0<>, <v>0<>)
+
+print("Color Yellow: ", <v>yellow<>.red, <v>yellow<>.green, <v>yellow<>.blue, <v>yellow<>.alpha)
+
+<#># Prints: "Color Yellow: 255 255 0 0"<><>
+
+
+
+### Named Tuple - Color
+
+Define Type:
+
+<cb>from collections import namedtuple
+
+<v>Color<> = namedtuple("AlphaColor", ["red", "green", "blue"])<>
+
+Use:
+
+<cb><v>yellow<> = Color(<v>255<>, <v>255<>, <v>0<>)
+
+print("Color Yellow: ", <v>yellow<>.red, <v>yellow<>.green, <v>yellow<>.blue)
+
+<#># Prints: "Color Yellow: 255 255 0"<><>
+
+
+
+### Named Tuple - Point
+
+Define Type:
+
+<cb>from collections import namedtuple
+
+<v>Point<> = namedtuple("Point", ["x", "y"])<>
+
+Use:
+
+<cb><v>point_1<> = Point(<v>10<>, <v>20<>)
+
+print("Point: ", <v>point_1<>.x, <v>point_1<>.y)
+
+<#># Prints: "Point: 10 20"<><>
+
+
+
+### Named Tuple - Size
+
+Define Type:
+
+<cb>from collections import namedtuple
+
+<v>Size<> = namedtuple("Size", ["width", "height"])<>
+
+Use:
+
+<cb><v>size_1<> = Size(<v>10<>, <v>20<>)
+
+print("Size: ", <v>size_1<>.width, <v>size_1<>.height)
+
+<#># Prints: "Size: 10 20"<><>
+
+
+
+### Named Tuple - Dimensions
+
+Define Type:
+
+<cb>from collections import namedtuple
+
+<v>Dimensions<> = namedtuple("Dimensions", ["x1", "y1", "x2", "y2"])<>
+
+Use:
+
+<cb><v>dimensions_1<> = Dimensions(<v>0<>, <v>0<>, <v>20<>, <v>40<>)
+
+print("Dimensions: ", <v>dimensions_1<>.x1, <v>dimensions_1<>.y1, <v>dimensions_1<>.x2, <v>dimensions_1<>.y2)
+
+<#># Prints: "Dimensions: 0 0 20 40"<><>
+
+
 
 
 
