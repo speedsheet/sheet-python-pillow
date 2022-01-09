@@ -1,5 +1,5 @@
 # <#>Pillow<> SpeedSheet
-<b>What you need, faster.<>
+<b>Find what you need, faster.<>
 
 
 # Summary
@@ -34,17 +34,7 @@ Add:
 
 
 
-# Image
-
-
-
-### Effect - Gradient Background
-
-Stack Overflow:
-<l>https://stackoverflow.com/questions/32530345/pil-generating-vertical-gradient-image<>
-
-Or Simpler(?):
-<l>https://gist.github.com/weihanglo/1e754ec47fdd683a42fdf6a272904535<>
+# File Functions
 
 
 
@@ -95,7 +85,7 @@ image = Image.new('RGBA', (160, 100), (127, 255, 0))
 		optimize = True)<>
 
 
-Writes a list of images assan animated image file for types gif and webp.
+Writes a list of images to an animated image file for types gif and webp.
 
 
 Example:
@@ -128,23 +118,7 @@ def add_square(<v>image<>, dimensions):
 
 
 
-### Image - Convert - From Array
-
-<cb>= Image.fromarray()<>
-
-Full Form:
-
-<cb>from PIL import Image
-
-= Image.fromarray(<v>list_1<>)<>
-
-<m>(Test with example)
-
-See:
-<l>https://stackoverflow.com/questions/14452824/how-can-i-save-an-image-with-pil<><>
-@
-@ Image.fromarray(), .fromarray()
-
+# Image Functions
 
 
 ### Image - Create
@@ -189,6 +163,23 @@ Colored Black:
 
 
 
+### Image - Create From Array
+
+<cb>= Image.fromarray()<>
+
+Full Form:
+
+<cb>from PIL import Image
+
+= Image.fromarray(<v>list_1<>)<>
+
+See:
+<l>https://stackoverflow.com/questions/14452824/how-can-i-save-an-image-with-pil<><>
+@
+@ Image.fromarray(), .fromarray(), convert
+
+
+
 ### Image - Copy
 
 <cb>= <v>image_1<>.copy()<>
@@ -211,136 +202,6 @@ Example:
 <v>image_2<>.show()<>
 @
 @ image.copy(), .copy()
-
-
-
-### Image Draw - Ellipse
-
-<cb>draw.ellipse(<v>dimensions<>, <v>fill_color<>)<>
-
-Full Form:
-
-<cb>from PIL import ImageDraw
-
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
-
-<v>draw<>.ellipse(<v>dimensions<>, <v>fill_color<>)<>
-
-<cb><v>draw<>.ellipse(<v>dimensions<>, <v>fill_color<>, <v>outline_color<>)<>
-
-<cb><v>draw<>.ellipse(<v>dimensions<>, fill = <v>fill_color<>, outline = <v>outline_color<>)<>
-
-
-<c><v>dimensions<><> (tuple):
-
-<cb>= (<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
-= ((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
-
-
-Fills in a rectangular area in the image.
-
-
-Example:
-
-<cb>from PIL import Image, ImageDraw
-
-<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
-
-<v>draw<> = ImageDraw.Draw(<v>image<>)
-<v>draw<>.ellipse((10, 10, 150, 90), (127, 255, 127))
-
-<v>image<>.show()<>
-
-@
-@ fill, circle
-@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .eclipse()
-
-
-
-### Image Draw - Line
-
-<cb>draw.line(<v>dimensions<>, <v>fill_color<>)<>
-
-Full Form:
-
-<cb>from PIL import ImageDraw
-
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
-
-<v>draw<>.line(<v>dimensions<>, <v>fill_color<>)<>
-
-<cb><v>draw<>.line(<v>dimensions<>, <v>fill_color<>, <v>width<>)<>
-
-<cb><v>draw<>.line(<v>dimensions<>, fill = <v>fill_color<>, width = <v>width<>)<>
-
-
-<c><v>dimensions<><> (tuple):
-
-<cb>= (<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
-= ((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
-
-
-Draws a line in the image.
-
-
-Example:
-
-<cb>from PIL import Image, ImageDraw
-
-<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
-
-<v>draw<> = ImageDraw.Draw(<v>image<>)
-<v>draw<>.line((10, 10, 150, 90), (127, 255, 127))
-
-<v>image<>.show()<>
-@
-@ fill, box
-@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .line()
-
-
-
-### Image Draw - Rectangle
-
-<cb>draw.rectangle(<v>dimensions<>, <v>fill_color<>)<>
-
-Full Form:
-
-<cb>from PIL import ImageDraw
-
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
-
-<v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>)<>
-
-<cb><v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>, <v>outline_color<>)<>
-
-<cb><v>draw<>.rectangle(<v>dimensions<>, fill = <v>fill_color<>, outline = <v>outline_color<>)<>
-
-
-<c><v>dimensions<><> (tuple):
-
-<cb>= (<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
-= ((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
-
-
-Fills in a rectangular area in the image.
-
-
-Example:
-
-<cb>from PIL import Image, ImageDraw
-
-<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
-
-<v>draw<> = ImageDraw.Draw(<v>image<>)
-<v>draw<>.rectangle((10, 10, 150, 90), (127, 255, 127))
-
-<v>image<>.show()<>
-@
-@ fill, box, square
-@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .rectangle()
 
 
 
@@ -378,8 +239,10 @@ Returns Blue Box (Size 20 x 10):
 Returns: <c>PIL.Image.Image<>
 
 
-<c><v>resize_algorithm<><>  -	<c>Image.LANCZOS<>
-					<c>...<>
+<c><v>resize_algorithm<><>:
+
+<cb>Image.ANTIALIAS
+Image.LANCZOS<>
 
 
 \#1  -  <c><v>width<><> and <c><v>height<><> must be integers.
@@ -396,6 +259,96 @@ Exapmle:
 
 
 Returns: <!>?<>  |  <c>PIL.JpegImagePlugin.JpegImageFile<>
+
+
+
+### Image - Insert Image
+
+<cb><v>target_image<>.paste(<v>insert_image<>, <v>position<>)<>
+
+<cb><v>target_image<>.paste(<v>insert_image<>, (<left>, <v>top<>))<>
+
+
+Inserts an image onto a second image.
+
+The position defines the top left coordinate of the inserted image.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>main_image<> = Image.new('RGBA', (160, 100), (64, 64, 64))
+<v>insert_image<> = Image.new('RGBA', (80, 50), (0, 255, 0))
+
+<v>main_image<>.paste(<v>insert_image<>, (10, 20))
+
+<v>main_image<>.show()<>
+@
+@ paste, 2nd, second, another, on top of
+@ image.paste(), .paste()
+
+
+
+### Image - Blend Images
+
+<cb>= Image.blend(<v>image_1<>, <v>image_2<>, <v>alpha<>)<>
+
+Full Form:
+
+<cb>from PIL import Image
+
+<v>blended<> = Image.blend(<v>image_1<>, <v>image_2<>, <v>alpha<>)<>
+
+
+Blends two images together.
+Images must be in "RGBA" form.
+The blend rate from one image to the other is determined by the <c><v>alpha<><> value.
+
+
+<c><v>alpha<><>:
+
+<in-2>A value between 0 and 1.
+
+<table><col>0.0<><col>1st Image Only<>
+<col>0.5<><col>50/50 Blent of Both<>
+<col>1.0<><col>2nd Image Only<><><>
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+def add_circle(<v>image<>, <v>dimensions<>, <v>color<>):
+	<v>draw<> = ImageDraw.Draw(<v>image<>)
+	<v>draw<>.ellipse(dimensions, <v>color<>)	
+
+<v>image_1<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+<v>image_2<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+add_circle(<v>image_1<>, (10, 10, 90, 90), 'red')
+add_circle(<v>image_2<>, (70, 10, 150, 90), 'lime')
+
+<v>blended<> = Image.blend(<v>image_1<>, <v>image_2<>, 0.5)
+
+<v>blended<>.show()<>
+@
+@ Image.blend(), .blend(), merge
+
+
+
+### Image - View
+
+<cb><v>image<>.show()<>
+
+Shows the image in using the default OS viewer.
+
+@
+@ .show(), show, display
+
+
+
+# Image Properties
 
 
 
@@ -419,33 +372,311 @@ Returns: <c>tuple (width, height)<>
 
 
 
-### Image - Overlay
+# Image Drawing Functions
 
-Convert Both to "RGBA":
 
-<cb>= <v>image_1<>.convert("RGBA")<>
+### Draw - Ellipse
 
-Blend Together:
+<cb><v>draw_1<>.ellipse(<v>dimensions<>, <v>fill_color<>)<>
 
-<cb>= Image.blend(<v>background_image<>, <v>overlay_image<>, 0.5)<>
+<cb><v>draw_1<>.ellipse((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>fill_color<>)<>
 
-<m>What does <v>0.5<> do? No idea. Figure that out<>
+Full Form:
 
-Stack Overflow:
-<l>https://stackoverflow.com/questions/10640114/overlay-two-same-sized-images-in-python/44749818<>
+<cb>from PIL import ImageDraw
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+
+<v>draw<>.ellipse(<v>dimensions<>, <v>fill_color<>)
+<v>draw<>.ellipse(<v>dimensions<>, <v>fill_color<>, <v>outline_color<>)
+<v>draw<>.ellipse(<v>dimensions<>, fill = <v>fill_color<>, outline = <v>outline_color<>)<>
+
+
+<c><v>dimensions<><> (tuple):
+
+<cb>= (<v>left<>, <v>top<>, <v>right<>, <v>bottom<>)
+= ((<v>left<>, <v>top<>), (<v>right<>, <v>bottom<>))<>
+
+
+Fills in an elliptical or circular area in the image.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.ellipse((40, 10, 120, 90), (127, 255, 127))
+
+<v>image<>.show()<>
 @
-@ Image.blend(), .blend()
+@ fill, circles, ellipses
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .ellipse()
 
 
 
-### Image - View
+### Draw - Line
 
-<cb><v>image<>.show()<>
+<cb><v>draw_1<>.line(<v>dimensions<>, <v>fill_color<>)<>
 
-Shows the image in using the default OS viewer.
+<cb><v>draw_1<>.line((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>fill_color<>)<>
 
+Full Form:
+
+<cb>from PIL import ImageDraw
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+
+<v>draw<>.line(<v>dimensions<>, <v>fill_color<>)
+<v>draw<>.line(<v>dimensions<>, <v>fill_color<>, <v>width<>)
+<v>draw<>.line(<v>dimensions<>, fill = <v>fill_color<>, width = <v>width<>)<>
+
+
+<c><v>dimensions<><> (tuple):
+
+<cb>= (<v>left<>, <v>top<>, <v>right<>, <v>bottom<>)
+= ((<v>left<>, <v>top<>), (<v>right<>, <v>bottom<>))<>
+
+
+Draws a line in the image.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.line((10, 10, 150, 90), (127, 255, 127))
+
+<v>image<>.show()<>
 @
-@ .show(), show, display
+@ fill, lines, width, wide
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .line()
+
+
+
+### Draw - Line - Multiple Lines
+
+<cb><v>draw_1<>.line(<v>xy_points<>, <v>fill_color<>)<>
+
+<cb><v>draw_1<>.line(((<v>x1<>, <v>y1<>), (<v>x2<>, <v>y2<>), <v>...<>), <v>fill_color<>)<>
+
+Full Form:
+
+<cb>from PIL import ImageDraw
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+
+<v>draw<>.line(<v>xy_points<>, <v>fill_color<>)
+<v>draw<>.line(<v>xy_points<>, <v>fill_color<>, <v>width<>)
+<v>draw<>.line(<v>xy_points<>, fill = <v>fill_color<>, width = <v>width<>)
+<v>draw<>.line(((<v>x1<>, <v>y1<>), (<v>x2<>, <v>y2<>), <v>...<>), fill = <v>fill_color<>, width = <v>width<>)<>
+
+
+Draws a series of connected lines in the image.
+
+
+Examples:
+
+Passing Tuple of XY Points:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>xy_points<> = ((10, 10), (150, 50), (10, 90))
+<v>yellow<> = (255, 255, 0)
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.line(<v>xy_points<>, <v>yellow<>)
+
+<v>image<>.show()<>
+
+Passing Directly:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.line(((10, 10), (150, 50), (10, 90)), (255, 255, 0))
+
+<v>image<>.show()<>
+@
+@ fill, width, wide
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .line()
+
+
+
+### Draw - Point
+
+<cb><v>draw_1<>.point((<v>x<>, <v>y<>), <v>color<>)<>
+
+Full Form:
+
+<cb>from PIL import ImageDraw
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+
+<v>draw<>.point((<v>x1<>, <v>y1<>), fill = <v>color<>)<>
+
+
+Draws a point in the image.
+A point is one pixel in size (can't adjust width).
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.point((10, 20), (127, 255, 127))
+
+<v>image<>.show()<>
+@
+@ points
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .point()
+
+
+
+### Draw - Point - Multiple Points
+
+<cb><v>draw_1<>.point(<v>xy_points<>, <v>color<>)<>
+
+<cb><v>draw_1<>.point(((<v>x1<>, <v>y1<>), (<v>x2<>, <v>y2<>), <v>...<>), <v>color<>)<>
+
+Full Form:
+
+<cb>from PIL import ImageDraw
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+
+<v>draw<>.point(<v>xy_points<>, <v>color<>)
+<v>draw<>.point(<v>xy_points<>, fill = <v>color<>)
+<v>draw<>.point(((<v>x1<>, <v>y1<>), (<v>x2<>, <v>y2<>), <v>...<>), fill = <v>color<>)<>
+
+
+Draws multiple points at once on the image.
+Each point is one pixel in size (can not adjust width).
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.point(((20, 20), (20, 40), (20, 60)), (255, 255, 0))
+
+<v>image<>.show()<>
+@
+@ fill
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .point()
+
+
+
+### Draw - Polygon
+
+<cb><v>draw_1<>.polygon(<v>xy_points<>, <v>color<>)<>
+
+Full Form:
+
+<cb>from PIL import ImageDraw
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+
+<v>draw<>.polygon(<v>points<>, <v>color<>, <v>color<>)
+<v>draw<>.polygon(<v>points<>, fill = <v>color<>, outline = <v>color<>)
+<v>draw<>.polygon(((<v>x1<>, <v>y1<>), (<v>x2<>, <v>y2<>), <v>...<>), fill = <v>color<>)<>
+
+
+Draws a polygon in the image.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+
+<v>draw<>.polygon(
+		((80, 20), (80, 80), (20, 50)),
+		fill = (255, 255, 0))
+
+<v>image<>.show()<>
+@
+@ fill, polygons, shapes
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .polygon()
+
+
+
+### Draw - Polygon Outline
+
+Use:
+
+<cb><v>draw_1<>.line(<v>set_of_xy_points<>, <v>fill_color<>)<>
+
+<l>pillow?search=line<>
+@
+@ polygons
+
+
+
+### Draw - Rectangle
+
+<cb><v>draw_1<>.rectangle(<v>dimensions<>, <v>fill_color<>)<>
+
+Full Form:
+
+<cb>from PIL import ImageDraw
+
+<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+
+<v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>)<>
+
+<cb><v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>, <v>outline_color<>)<>
+
+<cb><v>draw<>.rectangle(<v>dimensions<>, fill = <v>fill_color<>, outline = <v>outline_color<>)<>
+
+
+<c><v>dimensions<><> (tuple):
+
+<cb>= (<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
+= ((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
+
+
+Fills in a rectangular area in the image.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.rectangle((10, 10, 150, 90), (127, 255, 127))
+
+<v>image<>.show()<>
+@
+@ fill, box, squares, rectangles
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .rectangle()
 
 
 
@@ -454,37 +685,68 @@ Shows the image in using the default OS viewer.
 
 ### Color - Get RGB From Hex Value
 
-<cb>= ImageColor.getrgb()<>
+<cb>= ImageColor.getrgb('#<v>hex_value<>')<>
+
+With Import
 
 <cb>from PIL import ImageColor
 
 = ImageColor.getrgb('#<v>hex_value<>')<>
 
 
+Retrieves the color value for the given hex value.
+
+
 Example:
 
-<cb>from PIL import ImageColor
+<cb>from PIL import Image, ImageColor, ImageDraw
 
-<v>MAGENTA<> = ImageColor.getrgb('#<v>FF00FF<>')<>
+<v>MAGENTA<> = ImageColor.getrgb('#<v>FF00FF<>')
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.ellipse((40, 10, 120, 90), <v>MAGENTA<>)
+
+<v>image<>.show()<>
 @
-@ named
+@ named, #
 
 
 
 ### Color - Get RGB From Name
 
-<cb>= ImageColor.getrgb()<>
+<cb>= ImageColor.getrgb('<v>color_name<>')<>
+
+With Import:
 
 <cb>from PIL import ImageColor
 
 = ImageColor.getrgb('<v>color_name<>')<>
 
 
+Returns the color value for a named color.
+
+
+Example Names:
+
+<in><card><table><col><c>'Green'<><><col><green>●<><>
+<col><c>'DarkGreen'<><><col><darkgreen>●<><>
+<col><c>'Lime'<><><col><lime>●<><>
+<col><c>'OliveDrab'<><><col><olivedrab>●<><><><><>
+
+
+
 Example:
 
-<cb>from PIL import ImageColor
+<cb>from PIL import Image, ImageColor, ImageDraw
 
-<v>GREEN<> = ImageColor.getrgb('<v>green<>')<>
+<v>MAGENTA<> = ImageColor.getrgb('<v>magenta<>')
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.ellipse((40, 10, 120, 90), <v>MAGENTA<>)
+
+<v>image<>.show()<>
 @
 @ named
 
@@ -496,14 +758,91 @@ Example:
 
 
 
+### Image - Antialias
+
+Can only be done by super sampling.
+
+<cb><v>antialiased<> = <v>image<>.resize(
+		(<v>width<> // 2, <v>height<> // 2),
+		resample = Image.ANTIALIAS)<>
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>width<> = 640
+<v>height<> = 400
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>width<>, <v>height<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+
+<v>draw<>.line(
+		((20, 20), (620, 200), (20, 380), (20, 20)),
+		fill = (255, 255, 0),
+		width = 10)
+
+<v>antialiased<> = image.resize(
+		(<v>width<> // 2, <v>height<> // 2),
+		resample = Image.ANTIALIAS)
+
+<v>antialiased<>.show()<>
+@
+@ antialiasing, antialiased
+@ Image.ANTIALIAS
+
+
+
+### Image Effect - Gradient Background
+
+Stack Overflow:
+<l>https://stackoverflow.com/questions/32530345/pil-generating-vertical-gradient-image<>
+
+Or Simpler(?):
+<l>https://gist.github.com/weihanglo/1e754ec47fdd683a42fdf6a272904535<>
+@
+@ add
+
+
 # Reference - Types
 
 
 ### Color Type
 
+<cb>= (<v>red<>, <v>green<>, <v>blue<>)
+= (<v>red<>, <v>green<>, <v>blue<>, <v>saturation<>)
+
+= '#<v>FFFFFF<>'
+
+= '<v>ColorName<>'<>
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>210<>, <v>100<>), (64, 64, 64, 255))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+
+<v>draw<>.rectangle((10, 10, 30, 90), (255, 255, 0, 0))
+<v>draw<>.rectangle((40, 10, 60, 90), (255, 255, 0, 127))
+<v>draw<>.rectangle((70, 10, 90, 90), (255, 255, 0, 255))
+
+<v>draw<>.rectangle((120, 10, 140, 90), (255, 0, 0))
+<v>draw<>.rectangle((150, 10, 170, 90), "#00FF00")
+<v>draw<>.rectangle((180, 10, 200, 90), 'blue')
+
+<v>image<>.show()<>
+
+
+
+### Color Type - By Channel Value
+
 <cb>= (<v>red<>, <v>green<>, <v>blue<>)<>
 
-<cb>= (<v>red<>, <v>green<>, <v>blue<>, <v>alpha<>)<><>
+<cb>= (<v>red<>, <v>green<>, <v>blue<>, <v>saturation<>)<><>
 
 Color is a three or four value tuple.
 All values range from 0 to 255.
@@ -513,9 +852,77 @@ Example:
 
 <cb><v>magenta<> = (<v>255<>, <v>0<>, <v>255<>)<>
 
-50% Opacity:
+50% Saturation:
 
 <cb><v>magenta<> = (<v>255<>, <v>0<>, <v>255<>, <v>127<>)<>
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64, 255))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.ellipse((10, 10, 90, 90), (255, 0, 0))
+<v>draw<>.ellipse((70, 10, 150, 90), (255, 255, 255, 64))
+
+<v>image<>.show()<>
+
+
+
+### Color Type - By Hex Value
+
+<cb>= '#<v>FFFFFF<>'<>
+
+
+You can define a color as a hash followed by a six digit hex value.
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.ellipse((40, 10, 120, 90), '#<v>FFFF00<>')
+
+<v>image<>.show()<>
+
+
+
+### Color Type - By Name
+
+<cb>= '<v>ColorName<>'<>
+
+
+You can use a standard web color name passed as a string.
+
+
+Example:
+
+<in><card><table><col><c>'Red'<><><col><red>●<><>
+<col><c>'DarkRed'<><><col><darkred>●<><>
+<col><c>'Crimson'<><><col><crimson>●<><>
+<col><c>'Firebrick'<><><col><firebrick>●<><><><><>
+
+
+See full list of color names below:
+
+	<l pillow?search=color+names>Reference - Color Names<><>
+
+
+Example:
+
+<cb>from PIL import Image, ImageDraw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<>.ellipse((40, 10, 120, 90), '<v>yellow<>')
+
+<v>image<>.show()<>
 
 
 
@@ -554,25 +961,6 @@ Here are the principle data types defined as named tuples.
 
 
 
-### Named Tuple - Alpha Color
-
-Define Type:
-
-<cb>from collections import namedtuple
-
-<v>AlphaColor<> = namedtuple("AlphaColor", ["red", "green", "blue", "alpha"])<>
-
-Use:
-
-<cb><v>yellow<> = AlphaColor(<v>255<>, <v>255<>, <v>0<>, <v>255<>)
-<v>transparent<> = AlphaColor(<v>0<>, <v>0<>, <v>0<>, <v>0<>)
-
-print("Color Yellow: ", <v>yellow<>.red, <v>yellow<>.green, <v>yellow<>.blue, <v>yellow<>.alpha)
-
-<#># Prints: "Color Yellow: 255 255 0 0"<><>
-
-
-
 ### Named Tuple - Color
 
 Define Type:
@@ -588,6 +976,28 @@ Use:
 print("Color Yellow: ", <v>yellow<>.red, <v>yellow<>.green, <v>yellow<>.blue)
 
 <#># Prints: "Color Yellow: 255 255 0"<><>
+
+
+An namedtuple wrapper for a color tuple to make it easier to work with
+
+
+
+### Named Tuple - Color With Alpha Channel
+
+Define Type:
+
+<cb>from collections import namedtuple
+
+<v>AlphaColor<> = namedtuple("AlphaColor", ["red", "green", "blue", "alpha"])<>
+
+Use:
+
+<cb><v>yellow<> = AlphaColor(<v>255<>, <v>255<>, <v>0<>, <v>255<>)
+<v>transparent<> = AlphaColor(<v>0<>, <v>0<>, <v>0<>, <v>0<>)
+
+print("Color Yellow: ", <v>yellow<>.red, <v>yellow<>.green, <v>yellow<>.blue, <v>yellow<>.alpha)
+
+<#># Prints: "Color Yellow: 255 255 0 0"<><>
 
 
 
@@ -645,6 +1055,158 @@ print("Dimensions: ", <v>dimensions_1<>.x1, <v>dimensions_1<>.y1, <v>dimensions_
 
 
 
+# Reference - Color Names
+
+<table><col><c>'aliceblue'<><><col><c>'#f0f8ff'		<><><col><aliceblue>●<><>
+<col><c>'antiquewhite'<><><col><c>'#faebd7'<><><col><antiquewhite>●<><>
+<col><c>'aqua'<><><col><c>'#00ffff'<><><col><aqua>●<><>
+<col><c>'aquamarine'<><><col><c>'#7fffd4'<><><col><aquamarine>●<><>
+<col><c>'azure'<><><col><c>'#f0ffff'<><><col><azure>●<><>
+<col><c>'beige'<><><col><c>'#f5f5dc'<><><col><beige>●<><>
+<col><c>'bisque'<><><col><c>'#ffe4c4'<><><col><bisque>●<><>
+<col><c>'black'<><><col><c>'#000000'<><><col><black>●<><>
+<col><c>'blanchedalmond'<><><col><c>'#ffebcd'<><><col><blanchedalmond>●<><>
+<col><c>'blue'<><><col><c>'#0000ff'<><><col><blue>●<><>
+<col><c>'blueviolet'<><><col><c>'#8a2be2'<><><col><blueviolet>●<><>
+<col><c>'brown'<><><col><c>'#a52a2a'<><><col><brown>●<><>
+<col><c>'burlywood'<><><col><c>'#deb887'<><><col><burlywood>●<><>
+<col><c>'cadetblue'<><><col><c>'#5f9ea0'<><><col><cadetblue>●<><>
+<col><c>'chartreuse'<><><col><c>'#7fff00'<><><col><chartreuse>●<><>
+<col><c>'chocolate'<><><col><c>'#d2691e'<><><col><chocolate>●<><>
+<col><c>'coral'<><><col><c>'#ff7f50'<><><col><coral>●<><>
+<col><c>'cornflowerblue'<><><col><c>'#6495ed'<><><col><cornflowerblue>●<><>
+<col><c>'cornsilk'<><><col><c>'#fff8dc'<><><col><cornsilk>●<><>
+<col><c>'crimson'<><><col><c>'#dc143c'<><><col><crimson>●<><>
+<col><c>'cyan'<><><col><c>'#00ffff'<><><col><cyan>●<><>
+<col><c>'darkblue'<><><col><c>'#00008b'<><><col><darkblue>●<><>
+<col><c>'darkcyan'<><><col><c>'#008b8b'<><><col><darkcyan>●<><>
+<col><c>'darkgoldenrod'<><><col><c>'#b8860b'<><><col><darkgoldenrod>●<><>
+<col><c>'darkgray'<><><col><c>'#a9a9a9'<><><col><darkgray>●<><>
+<col><c>'darkgrey'<><><col><c>'#a9a9a9'<><><col><darkgray>●<><>
+<col><c>'darkgreen'<><><col><c>'#006400'<><><col><darkgreen>●<><>
+<col><c>'darkkhaki'<><><col><c>'#bdb76b'<><><col><darkkhaki>●<><>
+<col><c>'darkmagenta'<><><col><c>'#8b008b'<><><col><darkmagenta>●<><>
+<col><c>'darkolivegreen'<><><col><c>'#556b2f'<><><col><darkolivegreen>●<><>
+<col><c>'darkorange'<><><col><c>'#ff8c00'<><><col><darkorange>●<><>
+<col><c>'darkorchid'<><><col><c>'#9932cc'<><><col><darkorchid>●<><>
+<col><c>'darkred'<><><col><c>'#8b0000'<><><col><darkred>●<><>
+<col><c>'darksalmon'<><><col><c>'#e9967a'<><><col><darksalmon>●<><>
+<col><c>'darkseagreen'<><><col><c>'#8fbc8f'<><><col><darkseagreen>●<><>
+<col><c>'darkslateblue'<><><col><c>'#483d8b'<><><col><darkslateblue>●<><>
+<col><c>'darkslategray'<><><col><c>'#2f4f4f'<><><col><darkslategray>●<><>
+<col><c>'darkslategrey'<><><col><c>'#2f4f4f'<><><col><darkslategray>●<><>
+<col><c>'darkturquoise'<><><col><c>'#00ced1'<><><col><darkturquoise>●<><>
+<col><c>'darkviolet'<><><col><c>'#9400d3'<><><col><darkviolet>●<><>
+<col><c>'deeppink'<><><col><c>'#ff1493'<><><col><deeppink>●<><>
+<col><c>'deepskyblue'<><><col><c>'#00bfff'<><><col><deepskyblue>●<><>
+<col><c>'dimgray'<><><col><c>'#696969'<><><col><dimgray>●<><>
+<col><c>'dimgrey'<><><col><c>'#696969'<><><col><dimgray>●<><>
+<col><c>'dodgerblue'<><><col><c>'#1e90ff'<><><col><dodgerblue>●<><>
+<col><c>'firebrick'<><><col><c>'#b22222'<><><col><firebrick>●<><>
+<col><c>'floralwhite'<><><col><c>'#fffaf0'<><><col><floralwhite>●<><>
+<col><c>'forestgreen'<><><col><c>'#228b22'<><><col><forestgreen>●<><>
+<col><c>'fuchsia'<><><col><c>'#ff00ff'<><><col><fuchsia>●<><>
+<col><c>'gainsboro'<><><col><c>'#dcdcdc'<><><col><gainsboro>●<><>
+<col><c>'ghostwhite'<><><col><c>'#f8f8ff'<><><col><ghostwhite>●<><>
+<col><c>'gold'<><><col><c>'#ffd700'<><><col><gold>●<><>
+<col><c>'goldenrod'<><><col><c>'#daa520'<><><col><goldenrod>●<><>
+<col><c>'gray'<><><col><c>'#808080'<><><col><gray>●<><>
+<col><c>'grey'<><><col><c>'#808080'<><><col><gray>●<><>
+<col><c>'green'<><><col><c>'#008000'<><><col><green>●<><>
+<col><c>'greenyellow'<><><col><c>'#adff2f'<><><col><greenyellow>●<><>
+<col><c>'honeydew'<><><col><c>'#f0fff0'<><><col><honeydew>●<><>
+<col><c>'hotpink'<><><col><c>'#ff69b4'<><><col><hotpink>●<><>
+<col><c>'indianred'<><><col><c>'#cd5c5c'<><><col><indianred>●<><>
+<col><c>'indigo'<><><col><c>'#4b0082'<><><col><indigo>●<><>
+<col><c>'ivory'<><><col><c>'#fffff0'<><><col><ivory>●<><>
+<col><c>'khaki'<><><col><c>'#f0e68c'<><><col><khaki>●<><>
+<col><c>'lavender'<><><col><c>'#e6e6fa'<><><col><lavender>●<><>
+<col><c>'lavenderblush'<><><col><c>'#fff0f5'<><><col><lavenderblush>●<><>
+<col><c>'lawngreen'<><><col><c>'#7cfc00'<><><col><lawngreen>●<><>
+<col><c>'lemonchiffon'<><><col><c>'#fffacd'<><><col><lemonchiffon>●<><>
+<col><c>'lightblue'<><><col><c>'#add8e6'<><><col><lightblue>●<><>
+<col><c>'lightcoral'<><><col><c>'#f08080'<><><col><lightcoral>●<><>
+<col><c>'lightcyan'<><><col><c>'#e0ffff'<><><col><lightcyan>●<><>
+<col><c>'lightgoldenrodyellow'<><><col><c>'#fafad2'<><><col><lightgoldenrodyellow>●<><>
+<col><c>'lightgreen'<><><col><c>'#90ee90'<><><col><lightgreen>●<><>
+<col><c>'lightgray'<><><col><c>'#d3d3d3'<><><col><lightgray>●<><>
+<col><c>'lightgrey'<><><col><c>'#d3d3d3'<><><col><lightgray>●<><>
+<col><c>'lightpink'<><><col><c>'#ffb6c1'<><><col><lightpink>●<><>
+<col><c>'lightsalmon'<><><col><c>'#ffa07a'<><><col><lightsalmon>●<><>
+<col><c>'lightseagreen'<><><col><c>'#20b2aa'<><><col><lightseagreen>●<><>
+<col><c>'lightskyblue'<><><col><c>'#87cefa'<><><col><lightskyblue>●<><>
+<col><c>'lightslategray'<><><col><c>'#778899'<><><col><lightslategray>●<><>
+<col><c>'lightslategrey'<><><col><c>'#778899'<><><col><lightslategray>●<><>
+<col><c>'lightsteelblue'<><><col><c>'#b0c4de'<><><col><lightsteelblue>●<><>
+<col><c>'lightyellow'<><><col><c>'#ffffe0'<><><col><lightyellow>●<><>
+<col><c>'lime'<><><col><c>'#00ff00'<><><col><lime>●<><>
+<col><c>'limegreen'<><><col><c>'#32cd32'<><><col><limegreen>●<><>
+<col><c>'linen'<><><col><c>'#faf0e6'<><><col><linen>●<><>
+<col><c>'magenta'<><><col><c>'#ff00ff'<><><col><magenta>●<><>
+<col><c>'maroon'<><><col><c>'#800000'<><><col><maroon>●<><>
+<col><c>'mediumaquamarine'<><><col><c>'#66cdaa'<><><col><mediumaquamarine>●<><>
+<col><c>'mediumblue'<><><col><c>'#0000cd'<><><col><mediumblue>●<><>
+<col><c>'mediumorchid'<><><col><c>'#ba55d3'<><><col><mediumorchid>●<><>
+<col><c>'mediumpurple'<><><col><c>'#9370db'<><><col><mediumpurple>●<><>
+<col><c>'mediumseagreen'<><><col><c>'#3cb371'<><><col><mediumseagreen>●<><>
+<col><c>'mediumslateblue'<><><col><c>'#7b68ee'<><><col><mediumslateblue>●<><>
+<col><c>'mediumspringgreen'<><><col><c>'#00fa9a'<><><col><mediumspringgreen>●<><>
+<col><c>'mediumturquoise'<><><col><c>'#48d1cc'<><><col><mediumturquoise>●<><>
+<col><c>'mediumvioletred'<><><col><c>'#c71585'<><><col><mediumvioletred>●<><>
+<col><c>'midnightblue'<><><col><c>'#191970'<><><col><midnightblue>●<><>
+<col><c>'mintcream'<><><col><c>'#f5fffa'<><><col><mintcream>●<><>
+<col><c>'mistyrose'<><><col><c>'#ffe4e1'<><><col><mistyrose>●<><>
+<col><c>'moccasin'<><><col><c>'#ffe4b5'<><><col><moccasin>●<><>
+<col><c>'navajowhite'<><><col><c>'#ffdead'<><><col><navajowhite>●<><>
+<col><c>'navy'<><><col><c>'#000080'<><><col><navy>●<><>
+<col><c>'oldlace'<><><col><c>'#fdf5e6'<><><col><oldlace>●<><>
+<col><c>'olive'<><><col><c>'#808000'<><><col><olive>●<><>
+<col><c>'olivedrab'<><><col><c>'#6b8e23'<><><col><olivedrab>●<><>
+<col><c>'orange'<><><col><c>'#ffa500'<><><col><orange>●<><>
+<col><c>'orangered'<><><col><c>'#ff4500'<><><col><orangered>●<><>
+<col><c>'orchid'<><><col><c>'#da70d6'<><><col><orchid>●<><>
+<col><c>'palegoldenrod'<><><col><c>'#eee8aa'<><><col><palegoldenrod>●<><>
+<col><c>'palegreen'<><><col><c>'#98fb98'<><><col><palegreen>●<><>
+<col><c>'paleturquoise'<><><col><c>'#afeeee'<><><col><paleturquoise>●<><>
+<col><c>'palevioletred'<><><col><c>'#db7093'<><><col><palevioletred>●<><>
+<col><c>'papayawhip'<><><col><c>'#ffefd5'<><><col><papayawhip>●<><>
+<col><c>'peachpuff'<><><col><c>'#ffdab9'<><><col><peachpuff>●<><>
+<col><c>'peru'<><><col><c>'#cd853f'<><><col><peru>●<><>
+<col><c>'pink'<><><col><c>'#ffc0cb'<><><col><pink>●<><>
+<col><c>'plum'<><><col><c>'#dda0dd'<><><col><plum>●<><>
+<col><c>'powderblue'<><><col><c>'#b0e0e6'<><><col><powderblue>●<><>
+<col><c>'purple'<><><col><c>'#800080'<><><col><purple>●<><>
+<col><c>'rebeccapurple'<><><col><c>'#663399'<><><col><rebeccapurple>●<><>
+<col><c>'red'<><><col><c>'#ff0000'<><><col><red>●<><>
+<col><c>'rosybrown'<><><col><c>'#bc8f8f'<><><col><rosybrown>●<><>
+<col><c>'royalblue'<><><col><c>'#4169e1'<><><col><royalblue>●<><>
+<col><c>'saddlebrown'<><><col><c>'#8b4513'<><><col><saddlebrown>●<><>
+<col><c>'salmon'<><><col><c>'#fa8072'<><><col><salmon>●<><>
+<col><c>'sandybrown'<><><col><c>'#f4a460'<><><col><sandybrown>●<><>
+<col><c>'seagreen'<><><col><c>'#2e8b57'<><><col><seagreen>●<><>
+<col><c>'seashell'<><><col><c>'#fff5ee'<><><col><seashell>●<><>
+<col><c>'sienna'<><><col><c>'#a0522d'<><><col><sienna>●<><>
+<col><c>'silver'<><><col><c>'#c0c0c0'<><><col><silver>●<><>
+<col><c>'skyblue'<><><col><c>'#87ceeb'<><><col><skyblue>●<><>
+<col><c>'slateblue'<><><col><c>'#6a5acd'<><><col><slateblue>●<><>
+<col><c>'slategray'<><><col><c>'#708090'<><><col><slategray>●<><>
+<col><c>'slategrey'<><><col><c>'#708090'<><><col><slategray>●<><>
+<col><c>'snow'<><><col><c>'#fffafa'<><><col><snow>●<><>
+<col><c>'springgreen'<><><col><c>'#00ff7f'<><><col><springgreen>●<><>
+<col><c>'steelblue'<><><col><c>'#4682b4'<><><col><steelblue>●<><>
+<col><c>'tan'<><><col><c>'#d2b48c'<><><col><tan>●<><>
+<col><c>'teal'<><><col><c>'#008080'<><><col><teal>●<><>
+<col><c>'thistle'<><><col><c>'#d8bfd8'<><><col><thistle>●<><>
+<col><c>'tomato'<><><col><c>'#ff6347'<><><col><tomato>●<><>
+<col><c>'turquoise'<><><col><c>'#40e0d0'<><><col><turquoise>●<><>
+<col><c>'violet'<><><col><c>'#ee82ee'<><><col><violet>●<><>
+<col><c>'wheat'<><><col><c>'#f5deb3'<><><col><wheat>●<><>
+<col><c>'white'<><><col><c>'#ffffff'<><><col><white>●<><>
+<col><c>'whitesmoke'<><><col><c>'#f5f5f5'<><><col><whitesmoke>●<><>
+<col><c>'yellow'<><><col><c>'#ffff00'<><><col><yellow>●<><>
+<col><c>'yellowgreen'<><><col><c>'#9acd32'<><><col><yellowgreen>●<><><>
+@
+@ color types, names
 
 
 # Acronyms
