@@ -1,6 +1,11 @@
 # <#>Pillow<> SpeedSheet
 <b>Find what you need, faster.<>
 
+An excellent Python image processing library.
+
+
+<image "pillow-example.webp">
+
 
 # Summary
 
@@ -23,6 +28,8 @@ Pypi:
 ### Install - PIP
 
 <cb>pip3 install Pillow<>
+@
+@ install, download
 
 
 
@@ -31,6 +38,8 @@ Pypi:
 Add:
 
 <cb>Pillow<>
+@
+@ install, download
 
 
 
@@ -47,9 +56,6 @@ Full Form:
 <cb>from PIL import Image
 
 = Image.open(<v>image_path<>)<>
-
-
-Returns: <!>?<>  |  <c>PIL.JpegImagePlugin.JpegImageFile<>
 @
 @ .open(), load
 
@@ -65,7 +71,7 @@ The file name extension determines the file format used.
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
 
 image = Image.new('RGBA', (160, 100), (127, 255, 0))
 <v>image<>.save("<v>new_image.png<>")<>
@@ -75,6 +81,8 @@ image = Image.new('RGBA', (160, 100), (127, 255, 0))
 
 
 ### Image File - Write Animated
+
+<cb><v>images<>[0].save(<v>file_name<>, append_images = <v>images<>[1:])<>
 
 <cb><v>images<>[0].save(
 		<v>file_name<>,
@@ -87,21 +95,33 @@ image = Image.new('RGBA', (160, 100), (127, 255, 0))
 
 Writes a list of images to an animated image file for types gif and webp.
 
+Delete the previous image or your images will be appended to it.
 
-Example:
 
-<cb>from PIL import Image, ImageDraw
+Duration:
 
-def add_square(<v>image<>, dimensions):
-	draw = ImageDraw.Draw(<v>image<>)
-	draw.ellipse(dimensions, (255, 255, 0, 255))
+<in-2>Defines time between images in milliseconds.
+Values must be >= 20.<>
+
+Loop:
+
+<in-2>Loop infinitely - set to 0.<>
+
+
+Examples:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+def add_circle(<v>image<>, dimensions):
+	Draw(<v>image<>).ellipse(dimensions, (255, 255, 0, 255))
 	return <v>image<>
 
 <v>background<> = Image.new('RGBA', (<v>100<>, <v>100<>), (<v>30<>, <v>30<>, <v>25<>))
 
-<v>image_1<> = add_square(<v>background<>.copy(), (<v>10<>, <v>10<>, <v>50<>, <v>50<>))
-<v>image_2<> = add_square(<v>background<>.copy(), (<v>30<>, <v>30<>, <v>70<>, <v>70<>))
-<v>image_3<> = add_square(<v>background<>.copy(), (<v>50<>, <v>50<>, <v>90<>, <v>90<>))
+<v>image_1<> = add_circle(<v>background<>.copy(), (<v>10<>, <v>10<>, <v>50<>, <v>50<>))
+<v>image_2<> = add_circle(<v>background<>.copy(), (<v>30<>, <v>30<>, <v>70<>, <v>70<>))
+<v>image_3<> = add_circle(<v>background<>.copy(), (<v>50<>, <v>50<>, <v>90<>, <v>90<>))
 
 <v>images<> = [<v>image_1<>, <v>image_2<>, <v>image_3<>]
 
@@ -114,7 +134,77 @@ def add_square(<v>image<>, dimensions):
 		optimize = True)<>
 @
 @ .save(), save
-@ gif, webp
+@ gifs, webp
+
+
+
+### Image File - Write Animated (Individual Image Durations)
+
+<cb><v>images<>[0].save(
+		<v>...<>
+		duration = [<v>duration_1<>, <v>duration_2<>, <v>...<>],
+		<v>...<>)<>
+
+<cb><v>images<>[0].save(
+		<v>file_name<>,
+		append_images = <v>images<>[1:],
+		duration = <v>durations<>,
+		loop = 0,
+		save_all = True,
+		optimize = True)<>
+
+
+Writes a list of images to an animated image file for types gif and webp.
+
+Includes individual durations for each image slice.
+Delete the previous image or your images will be appended to it.
+
+
+Duration:
+
+<in-2>Pass in a list of durations.
+Values must be >= 20.<>
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+from math import pi, sin
+
+def generate_images(size):
+
+	<v>width<> = size[0]
+	<v>height<> = size[1]
+
+	<v>y_factor<> = 1 / <v>width<> * 2 * pi
+	<v>calc_y<> = lambda <v>x<>: int( <v>height<> / 2 + sin(<v>x<> * <v>y_factor<>) * <v>height<> / 2)
+	<v>calc_dimensions<> = lambda <v>x<>: (<v>x<>, <v>calc_y<>(<v>x<>), 20 + <v>x<>, 20 + <v>calc_y<>(<v>x<>))
+
+	<v>images<> = []
+	<v>background<> = Image.new('RGBA', size, '#303030')
+	for <v>x<> in range(0, <v>width<>, 10):
+		<v>images<>.append(add_circle(<v>background<>.copy(), calc_dimensions(<v>x<>)))
+
+	return <v>images<>
+
+def add_circle(<v>image<>, dimensions):
+	Draw(<v>image<>).ellipse(dimensions, 'yellow')
+	return <v>image<>
+
+<v>images<> = generate_images((<v>160<>, <v>100<>))
+<v>durations<> = [<v>20<>, <v>20<>, <v>20<>, <v>40<>, <v>40<>, <v>40<>, <v>60<>, <v>60<>, <v>60<>, <v>80<>, <v>80<>, <v>80<>, <v>80<>, <v>60<>, <v>40<>, <v>20<>]
+
+<v>images<>[0].save(
+		"<v>circled.gif<>",
+		append_images = <v>images<>[1:],
+		duration = <v>durations<>,
+		loop = 0,
+		save_all = True,
+		optimize = True)<>
+@
+@ .save(), save
+@ gifs, webp
 
 
 
@@ -123,15 +213,14 @@ def add_square(<v>image<>, dimensions):
 
 ### Image - Create
 
-<cb>= Image.new()<>
+<cb>= Image.new(<v>mode<>, <v>size<>, <v>color<>)<>
 
 Full Form:
 
 <cb>from PIL import Image
 
-= Image.new(<v>mode<>, <v>size<>)<>
-
-<cb>= Image.new(<v>mode<>, <v>size<>, <v>color<>)<>
+= Image.new(<v>mode<>, <v>size<>)
+= Image.new(<v>mode<>, <v>size<>, <v>color<>)<>
 
 <table><col><c>mode<><><col>(string)<><col><code>'RGB'
 'RGBA'<><>
@@ -145,18 +234,38 @@ Full Form:
 Creates a new image of the given size and color.
 
 
-Examples:
-
-<cb>from PIL import Image
-
-<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>))
-<v>image<>.show()<>
+Example:
 
 Colored Black:
 
 <cb>from PIL import Image
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (0,0,0))
+<v>image<>.show()<>
+@
+@ new, pil.image.new(), image.new(), .new()
+
+
+
+### Image - Create Empty Transparant Image
+
+<cb>= Image.new('RGBA', <v>size<>)<>
+
+Full Form:
+
+<cb>from PIL import Image
+
+= Image.new('RGBA', <v>size<>)<>
+
+
+Creates a completely transparent image.
+
+
+Examples:
+
+<cb>from PIL import Image
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>))
 <v>image<>.show()<>
 @
 @ new, pil.image.new(), image.new(), .new()
@@ -177,6 +286,7 @@ See:
 <l>https://stackoverflow.com/questions/14452824/how-can-i-save-an-image-with-pil<><>
 @
 @ Image.fromarray(), .fromarray(), convert
+@ new
 
 
 
@@ -190,12 +300,11 @@ Creates a copy of the image.
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image_1<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
-
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
-<v>draw<>.rectangle((10, 10, 150, 90), (127, 255, 127))
+Draw(<v>image_1<>).rectangle((10, 10, 150, 90), (127, 255, 127))
 
 <v>image_2<> = <v>image_1<>.copy()
 
@@ -205,9 +314,9 @@ Example:
 
 
 
-### Image Edit - Crop
+### Image - Crop
 
-<cb>= image.crop((<v>left<>, <v>top<>, <v>right_plus_one<>, <v>bottom_plus_one<>))<>
+<cb>= <v>image<>.crop((<v>left<>, <v>top<>, <v>right_plus_one<>, <v>bottom_plus_one<>))<>
 
 or
 
@@ -231,7 +340,147 @@ Returns Blue Box (Size 20 x 10):
 
 
 
-### Image Edit - Resize
+### Image - Invert
+
+<cb>= ImageOps.invert(<v>image<>)<>
+
+<cb>from PIL.ImageOps import invert
+
+= invert(<v>image<>)<>
+
+
+Inverts the colors of an image.
+
+Images must be 'RGB' only.
+Will not correctly process images with tranparancies.
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+from PIL.ImageOps import invert
+
+<v>image_1<> = Image.new('RGB', (<v>160<>, <v>100<>), 'darkgrey')
+Draw(<v>image_1<>).rectangle((10, 10, 30, 30), 'lime')
+
+<v>inverted<> = invert(<v>image_1<>)
+<v>inverted<>.show()<>
+@
+@ pil.imageops.invert(), imageops.invert(), .invert()
+@ colors, inverse
+
+
+
+### Image - Invert With Transparancy
+
+Use This Function:
+
+<cb>from PIL.Image import merge
+from PIL import ImageOps
+
+def invert(<v>image<>):
+	if <v>image<>.mode != 'RGBA':
+		return ImageOps.invert(<v>image<>)
+	<v>red<>, <v>green<>, <v>blue<>, <v>alpha<> = <v>image<>.split()
+	<v>inverted_image<> = ImageOps.invert(merge('RGB', (<v>red<>, <v>green<>, <v>blue<>)))
+	<v>inverted_red<>, <v>inverted_green<>, <v>inverted_blue<> = <v>inverted_image<>.split()
+	return merge('RGBA', (<v>inverted_red<>, <v>inverted_green<>, <v>inverted_blue<>, <v>alpha<>))
+
+= invert(<v>image<>)<>
+
+
+Inverts an 'RGBA' image, an image with transparancies.
+
+Pillow does not seem to have a reliable way to invert images with transparancies at the time of this example.
+(Tried ImageChops.invert()... nope!)
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL import ImageOps
+from PIL.Image import merge
+from PIL.ImageDraw import Draw
+
+def invert(<v>image<>):
+	if <v>image<>.mode != 'RGBA':
+		return ImageOps.invert(<v>image<>)
+	<v>red<>, <v>green<>, <v>blue<>, <v>alpha<> = <v>image<>.split()
+	<v>inverted_image<> = ImageOps.invert(merge('RGB', (<v>red<>, <v>green<>, <v>blue<>)))
+	<v>inverted_red<>, <v>inverted_green<>, <v>inverted_blue<> = <v>inverted_image<>.split()
+	return merge('RGBA', (<v>inverted_red<>, <v>inverted_green<>, <v>inverted_blue<>, <v>alpha<>))
+
+<v>image_1<> = Image.new('RGBA', (<v>160<>, <v>100<>), 'darkgrey')
+Draw(<v>image_1<>).rectangle((10, 10, 30, 30), 'lime')
+
+<v>inverted<> = invert(<v>image_1<>)
+<v>inverted<>.show()<>
+@
+@ pil.imageops.invert(), imageops.invert(), .invert()
+@ pil.imagechops.invert(), imagechops.invert()
+@ colors, inverse
+
+
+### Image - Mirror Horizontally
+
+<cb>= ImageOps.mirror(<v>image_1<>)<>
+
+<cb>from PIL.ImageOps import mirror
+
+= mirror(<v>image<>)<>
+
+
+Mirrors an image horizontally.
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+from PIL.ImageOps import mirror
+
+<v>image_1<> = Image.new('RGBA', (<v>160<>, <v>100<>), 'darkgrey')
+Draw(<v>image_1<>).rectangle((10, 10, 30, 30), 'lime')
+
+<v>mirrored<> = mirror(<v>image_1<>)
+<v>mirrored<>.show()<>
+@
+@ pil.imageops.mirror(), imageops.mirror(), .mirror()
+@ flip, mirror, reverse, swap
+
+
+
+### Image - Mirror Vertically
+
+<cb>= ImageOps.flip(<v>image_1<>)<>
+
+<cb>from PIL.ImageOps import flip
+
+= flip(<v>image<>)<>
+
+
+Mirrors an image vertically.
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+from PIL.ImageOps import flip
+
+<v>image_1<> = Image.new('RGBA', (<v>160<>, <v>100<>), 'darkgrey')
+Draw(<v>image_1<>).rectangle((10, 10, 30, 30), 'lime')
+
+<v>mirrored<> = flip(<v>image_1<>)
+<v>mirrored<>.show()<>
+@
+@ pil.imageops.flip(), imageops.flip(), .flip()
+@ flip, mirror, reverse, swap
+
+
+
+### Image - Resize
 
 <cb><v>image_1<>.resize((<v>width<>, <v>height<>), <v>resize_algorithm<>)		<#>#1<><>
 
@@ -242,7 +491,9 @@ Returns: <c>PIL.Image.Image<>
 <c><v>resize_algorithm<><>:
 
 <cb>Image.ANTIALIAS
-Image.LANCZOS<>
+Image.LANCZOS
+
+<s>(others?)<><>
 
 
 \#1  -  <c><v>width<><> and <c><v>height<><> must be integers.
@@ -253,12 +504,36 @@ Exapmle:
 <cb><v>resized<> = <v>image_1<>.resize((160, 90), Image.LANCZOS)<>
 
 
-### Image Edit - Rotate
+### Image - Rotate
 
 <cb>= <v>image_1<>.rotate(<v>degrees<>)<>
 
+<cb>= <v>image_1<>.rotate(<v>degrees<>, expand = True)
+= <v>image_1<>.rotate(<v>degrees<>, fillcolor = <v>color<>)
+= <v>image_1<>.rotate(<v>degrees<>, center = (<v>x<>, <v>y<>)<>
 
-Returns: <!>?<>  |  <c>PIL.JpegImagePlugin.JpegImageFile<>
+
+Rotates an image counter-clockwise.
+
+If <c>expand = True<>, expands the image to fit the rotation.
+Use <c>fillcolor<> to set the color of any area not covered by the rotating image (defaults to transparent).
+Set <c>center<> to set the rotation point (defaults to the image center).
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+from PIL.ImageOps import mirror
+
+<v>image_1<> = Image.new('RGBA', (<v>160<>, <v>100<>), 'darkgrey')
+Draw(<v>image_1<>).rectangle((10, 10, 30, 30), 'lime')
+
+<v>rotated<> = <v>image_1<>.rotate(<v>45<>, expand = True, fillcolor = 'blue')
+<v>rotated<>.show()<>
+@
+@ pil.imageops.mirror(), imageops.mirror(), .mirror()
+@ flip, mirror, reverse, swap
 
 
 
@@ -266,7 +541,7 @@ Returns: <!>?<>  |  <c>PIL.JpegImagePlugin.JpegImageFile<>
 
 <cb><v>target_image<>.paste(<v>insert_image<>, <v>position<>)<>
 
-<cb><v>target_image<>.paste(<v>insert_image<>, (<left>, <v>top<>))<>
+<cb><v>target_image<>.paste(<v>insert_image<>, (<v>left<>, <v>top<>))<>
 
 
 Inserts an image onto a second image.
@@ -276,10 +551,10 @@ The position defines the top left coordinate of the inserted image.
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
 
-<v>main_image<> = Image.new('RGBA', (160, 100), (64, 64, 64))
-<v>insert_image<> = Image.new('RGBA', (80, 50), (0, 255, 0))
+<v>main_image<> = Image.new('RGBA', (160, 100), 'dimgrey')
+<v>insert_image<> = Image.new('RGBA', (80, 50), 'lime')
 
 <v>main_image<>.paste(<v>insert_image<>, (10, 20))
 
@@ -317,17 +592,14 @@ The blend rate from one image to the other is determined by the <c><v>alpha<><> 
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw	
 
-def add_circle(<v>image<>, <v>dimensions<>, <v>color<>):
-	<v>draw<> = ImageDraw.Draw(<v>image<>)
-	<v>draw<>.ellipse(dimensions, <v>color<>)	
+<v>image_1<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), 'dimgrey')
+<v>image_2<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), 'dimgrey')
 
-<v>image_1<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
-<v>image_2<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
-
-add_circle(<v>image_1<>, (10, 10, 90, 90), 'red')
-add_circle(<v>image_2<>, (70, 10, 150, 90), 'lime')
+Draw(<v>image_1<>).ellipse((10, 10, 90, 90), 'red')
+Draw(<v>image_2<>).ellipse((70, 10, 150, 90), 'lime')
 
 <v>blended<> = Image.blend(<v>image_1<>, <v>image_2<>, 0.5)
 
@@ -357,6 +629,8 @@ Shows the image in using the default OS viewer.
 <cb>= <v>image<>.size<>
 
 Returns: <c>tuple (width, height)<>
+@
+@ width, height
 
 
 
@@ -373,6 +647,8 @@ Returns: <c>tuple (width, height)<>
 
 
 # Image Drawing Functions
+@
+@ add
 
 
 ### Draw - Ellipse
@@ -383,9 +659,9 @@ Returns: <c>tuple (width, height)<>
 
 Full Form:
 
-<cb>from PIL import ImageDraw
+<cb>from PIL.ImageDraw import Draw
 
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+<v>draw<> = Draw(<v>image_1<>)
 
 <v>draw<>.ellipse(<v>dimensions<>, <v>fill_color<>)
 <v>draw<>.ellipse(<v>dimensions<>, <v>fill_color<>, <v>outline_color<>)
@@ -403,11 +679,12 @@ Fills in an elliptical or circular area in the image.
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 <v>draw<>.ellipse((40, 10, 120, 90), (127, 255, 127))
 
 <v>image<>.show()<>
@@ -426,9 +703,9 @@ Example:
 
 Full Form:
 
-<cb>from PIL import ImageDraw
+<cb>from PIL.ImageDraw import Draw
 
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+<v>draw<> = Draw(<v>image_1<>)
 
 <v>draw<>.line(<v>dimensions<>, <v>fill_color<>)
 <v>draw<>.line(<v>dimensions<>, <v>fill_color<>, <v>width<>)
@@ -446,11 +723,12 @@ Draws a line in the image.
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 <v>draw<>.line((10, 10, 150, 90), (127, 255, 127))
 
 <v>image<>.show()<>
@@ -469,9 +747,9 @@ Example:
 
 Full Form:
 
-<cb>from PIL import ImageDraw
+<cb>from PIL.ImageDraw import Draw
 
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+<v>draw<> = Draw(<v>image_1<>)
 
 <v>draw<>.line(<v>xy_points<>, <v>fill_color<>)
 <v>draw<>.line(<v>xy_points<>, <v>fill_color<>, <v>width<>)
@@ -486,25 +764,27 @@ Examples:
 
 Passing Tuple of XY Points:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
 <v>xy_points<> = ((10, 10), (150, 50), (10, 90))
 <v>yellow<> = (255, 255, 0)
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 <v>draw<>.line(<v>xy_points<>, <v>yellow<>)
 
 <v>image<>.show()<>
 
 Passing Directly:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 <v>draw<>.line(((10, 10), (150, 50), (10, 90)), (255, 255, 0))
 
 <v>image<>.show()<>
@@ -521,9 +801,9 @@ Passing Directly:
 
 Full Form:
 
-<cb>from PIL import ImageDraw
+<cb>from PIL.ImageDraw import Draw
 
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+<v>draw<> = Draw(<v>image_1<>)
 
 <v>draw<>.point((<v>x1<>, <v>y1<>), fill = <v>color<>)<>
 
@@ -534,11 +814,12 @@ A point is one pixel in size (can't adjust width).
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 <v>draw<>.point((10, 20), (127, 255, 127))
 
 <v>image<>.show()<>
@@ -557,9 +838,9 @@ Example:
 
 Full Form:
 
-<cb>from PIL import ImageDraw
+<cb>from PIL.ImageDraw import Draw
 
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+<v>draw<> = Draw(<v>image_1<>)
 
 <v>draw<>.point(<v>xy_points<>, <v>color<>)
 <v>draw<>.point(<v>xy_points<>, fill = <v>color<>)
@@ -572,11 +853,12 @@ Each point is one pixel in size (can not adjust width).
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 <v>draw<>.point(((20, 20), (20, 40), (20, 60)), (255, 255, 0))
 
 <v>image<>.show()<>
@@ -593,9 +875,9 @@ Example:
 
 Full Form:
 
-<cb>from PIL import ImageDraw
+<cb>from PIL.ImageDraw import Draw
 
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+<v>draw<> = Draw(<v>image_1<>)
 
 <v>draw<>.polygon(<v>points<>, <v>color<>, <v>color<>)
 <v>draw<>.polygon(<v>points<>, fill = <v>color<>, outline = <v>color<>)
@@ -607,11 +889,12 @@ Draws a polygon in the image.
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 
 <v>draw<>.polygon(
 		((80, 20), (80, 80), (20, 50)),
@@ -627,13 +910,15 @@ Example:
 
 ### Draw - Polygon Outline
 
-Use:
+Use <c>line()<>:
 
-<cb><v>draw_1<>.line(<v>set_of_xy_points<>, <v>fill_color<>)<>
+<cb><v>draw_1<>.line(<v>xy_points<>, <v>fill_color<>)<>
 
-<l>pillow?search=line<>
+<cb><v>draw_1<>.line(((<v>x1<>, <v>y1<>), (<v>x2<>, <v>y2<>), <v>...<>), <v>fill_color<>)<>
+
+Use the line() method and pass in a list of (x, y) points.
 @
-@ polygons
+@ polygons, image.line(), .line()
 
 
 
@@ -643,9 +928,9 @@ Use:
 
 Full Form:
 
-<cb>from PIL import ImageDraw
+<cb>from PIL.ImageDraw import Draw
 
-<v>draw<> = ImageDraw.Draw(<v>image_1<>)
+<v>draw<> = Draw(<v>image_1<>)
 
 <v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>)<>
 
@@ -665,11 +950,12 @@ Fills in a rectangular area in the image.
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 <v>draw<>.rectangle((10, 10, 150, 90), (127, 255, 127))
 
 <v>image<>.show()<>
@@ -699,13 +985,13 @@ Retrieves the color value for the given hex value.
 
 Example:
 
-<cb>from PIL import Image, ImageColor, ImageDraw
+<cb>from PIL import Image, ImageColor
+from PIL.ImageDraw import Draw
 
 <v>MAGENTA<> = ImageColor.getrgb('#<v>FF00FF<>')
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
-<v>draw<> = ImageDraw.Draw(<v>image<>)
-<v>draw<>.ellipse((40, 10, 120, 90), <v>MAGENTA<>)
+Draw(<v>image<>).ellipse((40, 10, 120, 90), <v>MAGENTA<>)
 
 <v>image<>.show()<>
 @
@@ -738,13 +1024,13 @@ Example Names:
 
 Example:
 
-<cb>from PIL import Image, ImageColor, ImageDraw
+<cb>from PIL import Image, ImageColor
+from PIL.ImageDraw import Draw
 
 <v>MAGENTA<> = ImageColor.getrgb('<v>magenta<>')
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
-<v>draw<> = ImageDraw.Draw(<v>image<>)
-<v>draw<>.ellipse((40, 10, 120, 90), <v>MAGENTA<>)
+Draw(<v>image<>).ellipse((40, 10, 120, 90), <v>MAGENTA<>)
 
 <v>image<>.show()<>
 @
@@ -769,14 +1055,15 @@ Can only be done by super sampling.
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>width<> = 640
 <v>height<> = 400
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>width<>, <v>height<>), (64, 64, 64))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 
 <v>draw<>.line(
 		((20, 20), (620, 200), (20, 380), (20, 20)),
@@ -820,11 +1107,12 @@ Or Simpler(?):
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>210<>, <v>100<>), (64, 64, 64, 255))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 
 <v>draw<>.rectangle((10, 10, 30, 90), (255, 255, 0, 0))
 <v>draw<>.rectangle((40, 10, 60, 90), (255, 255, 0, 127))
@@ -859,11 +1147,12 @@ Example:
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64, 255))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 <v>draw<>.ellipse((10, 10, 90, 90), (255, 0, 0))
 <v>draw<>.ellipse((70, 10, 150, 90), (255, 255, 255, 64))
 
@@ -881,11 +1170,12 @@ You can define a color as a hash followed by a six digit hex value.
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
+<v>draw<> = Draw(<v>image<>)
 <v>draw<>.ellipse((40, 10, 120, 90), '#<v>FFFF00<>')
 
 <v>image<>.show()<>
@@ -915,12 +1205,13 @@ See full list of color names below:
 
 Example:
 
-<cb>from PIL import Image, ImageDraw
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
 
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
-<v>draw<> = ImageDraw.Draw(<v>image<>)
-<v>draw<>.ellipse((40, 10, 120, 90), '<v>yellow<>')
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.ellipse((40, 10, 120, 90), '<v>crimson<>')
 
 <v>image<>.show()<>
 
@@ -953,7 +1244,7 @@ Here are the principle data types defined as named tuples.
 <cb>from collections import namedtuple
 
 <v>AlphaColor<> = namedtuple("AlphaColor", ["red", "green", "blue", "alpha"])
-<v>Color<> = namedtuple("AlphaColor", ["red", "green", "blue"])
+<v>Color<> = namedtuple("Color", ["red", "green", "blue"])
 
 <v>Point<> = namedtuple("Point", ["x", "y"])
 <v>Size<> = namedtuple("Size", ["width", "height"])
@@ -963,26 +1254,48 @@ Here are the principle data types defined as named tuples.
 
 ### Named Tuple - Color
 
+<cb>= Color(<v>red<>, <v>green<>, <v>blue<>)<>
+
 Define Type:
 
 <cb>from collections import namedtuple
 
-<v>Color<> = namedtuple("AlphaColor", ["red", "green", "blue"])<>
+<v>Color<> = namedtuple("Color", ["red", "green", "blue"])<>
 
 Use:
 
 <cb><v>yellow<> = Color(<v>255<>, <v>255<>, <v>0<>)
 
-print("Color Yellow: ", <v>yellow<>.red, <v>yellow<>.green, <v>yellow<>.blue)
+<v>image<> = Image.new('RGBA', (160, 100), <v>yellow<>)
+<v>red_channel<> = <v>yellow<>.red<>
 
-<#># Prints: "Color Yellow: 255 255 0"<><>
+
+This is a drop in replacement for the (red, green, blue) alpha color tuple.
+To make working with color data easier, create this namedtuple and use in place of plain color tuples.
 
 
-An namedtuple wrapper for a color tuple to make it easier to work with
+Example:
+
+<cb>from collections import namedtuple
+from PIL import Image
+
+Color = namedtuple("Color", ["red", "green", "blue"])
+
+<v>yellow<> = Color(<v>255<>, <v>255<>, <v>0<>)
+
+<v>image<> = Image.new('RGBA', (160, 100), <v>yellow<>)
+<v>image<>.show()
+
+print("Yellow :", <v>yellow<>, ":", <v>yellow<>.red, <v>yellow<>.green, <v>yellow<>.blue)
+
+<#># Prints:
+\# "Yellow : Color(red=255, green=255, blue=0) : 255 255 0"<><>
 
 
 
 ### Named Tuple - Color With Alpha Channel
+
+<cb>= AlphaColor(<v>red<>, <v>green<>, <v>blue<>, <v>alpha<>)<>
 
 Define Type:
 
@@ -993,15 +1306,39 @@ Define Type:
 Use:
 
 <cb><v>yellow<> = AlphaColor(<v>255<>, <v>255<>, <v>0<>, <v>255<>)
-<v>transparent<> = AlphaColor(<v>0<>, <v>0<>, <v>0<>, <v>0<>)
 
-print("Color Yellow: ", <v>yellow<>.red, <v>yellow<>.green, <v>yellow<>.blue, <v>yellow<>.alpha)
+<v>image<> = Image.new('RGBA', (160, 100), <v>yellow<>)
+<v>alpha_channel<> = <v>yellow<>.alpha<>
 
-<#># Prints: "Color Yellow: 255 255 0 0"<><>
+
+This is a drop in replacement for the (red, green, blue, alpha) alpha color tuple.
+To make working with color data easier, create this namedtuple and use in place of plain color tuples.
+
+
+Example:
+
+<cb>from collections import namedtuple
+from PIL import Image
+
+AlphaColor = namedtuple("AlphaColor", ["red", "green", "blue", "alpha"])
+
+<v>yellow<> = AlphaColor(<v>255<>, <v>255<>, <v>0<>, <v>255<>)
+
+image = Image.new('RGBA', (160, 100), <v>yellow<>)
+image.show()
+
+print("Yellow :", <v>yellow<>, ":", <v>yellow<>.red, <v>yellow<>.green, <v>yellow<>.blue, <v>yellow<>.alpha)
+
+<#># Prints:
+\# "Yellow : AlphaColor(red=255, green=255, blue=0, alpha=255) : 255 255 0 255"<><>
+@
+@ alphacolor
 
 
 
 ### Named Tuple - Point
+
+<cb>= Point(<v>x<>, <v>y<>)<>
 
 Define Type:
 
@@ -1013,13 +1350,37 @@ Use:
 
 <cb><v>point_1<> = Point(<v>10<>, <v>20<>)
 
-print("Point: ", <v>point_1<>.x, <v>point_1<>.y)
+<v>x<> = <v>point_1<>.x<>
 
-<#># Prints: "Point: 10 20"<><>
+
+This is a drop in replacement for the (x, y) point tuple.
+To make working with point data easier, create this namedtuple and use in place of plain point tuples.
+
+
+Example:
+
+<cb>from collections import namedtuple
+from PIL import Image
+from PIL.ImageDraw import Draw	
+
+Point = namedtuple("Point", ["x", "y"])
+
+<v>image<> = Image.new('RGBA', (160, 100), 'dimgrey')
+
+<v>point_1<> = Point(40, 25)
+
+Draw(<v>image<>).point(<v>point_1<>, 'yellow')
+<v>image<>.show()
+
+print(<v>point_1<>, ":", <v>point_1<>.x, <v>point_1<>.y)
+
+<#># Prints: "Point(x=40, y=25) : 40 25"<><>
 
 
 
 ### Named Tuple - Size
+
+<cb>= Size(<v>width<>, <v>height<>)<>
 
 Define Type:
 
@@ -1031,13 +1392,37 @@ Use:
 
 <cb><v>size_1<> = Size(<v>10<>, <v>20<>)
 
-print("Size: ", <v>size_1<>.width, <v>size_1<>.height)
+<v>image<> = Image.new('RGBA', <v>size_1<>, <v>color<>)
+<v>width<> = <v>size_1<>.width<>
 
-<#># Prints: "Size: 10 20"<><>
+
+This is a drop in replacement for the (width, height) size tuple.
+To make working with size data easier, create this namedtuple and use in place of plain size tuples.
+
+
+Example:
+
+<cb>from collections import namedtuple
+from PIL import Image
+
+Size = namedtuple("Size", ["width", "height"])
+
+<v>size_1<> = Size(<v>160<>, <v>100<>)
+
+<v>image<> = Image.new('RGBA', <v>size_1<>, 'dimgrey')
+<v>image<>.show()
+
+print(<v>size_1<>, ":", <v>size_1<>.width, <v>size_1<>.height)
+
+<#># Prints: "Size(width=160, height=100) : 160 100"<><>
+@
+@ height, width
 
 
 
 ### Named Tuple - Dimensions
+
+<cb>= Dimensions(<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>)<>
 
 Define Type:
 
@@ -1049,9 +1434,34 @@ Use:
 
 <cb><v>dimensions_1<> = Dimensions(<v>0<>, <v>0<>, <v>20<>, <v>40<>)
 
-print("Dimensions: ", <v>dimensions_1<>.x1, <v>dimensions_1<>.y1, <v>dimensions_1<>.x2, <v>dimensions_1<>.y2)
+Draw(<v>image<>).eclipse(<v>dimensions_1<>, <v>color<>)
+<v>x1<> = <v>dimensions_1<>.x1<>
 
-<#># Prints: "Dimensions: 0 0 20 40"<><>
+
+This is a drop in replacement for the (x1, y1, x2, y2) dimension tuple.
+To make working with dimension data easier, create this namedtuple and use in place of plain dimensional tuples.
+
+
+Example:
+
+<cb>from collections import namedtuple
+from PIL import Image
+from PIL.ImageDraw import Draw
+
+Dimensions = namedtuple("Dimensions", ["x1", "y1", "x2", "y2"])
+
+<v>dimensions_1<> = Dimensions(<v>40<>, <v>10<>, <v>120<>, <v>90<>)
+
+<v>image<> = Image.new('RGBA', (160, 100), 'dimgrey')
+Draw(<v>image<>).ellipse(<v>dimensions_1<>, 'yellow')
+<v>image<>.show()
+
+print(<v>dimensions_1<>, ":", <v>dimensions_1<>.x1, <v>dimensions_1<>.y1, <v>dimensions_1<>.x2, <v>dimensions_1<>.y2)
+
+<#># Prints:
+\# "Dimensions(x1=40, y1=10, x2=120, y2=90) : 40 10 120 90"<><>
+@
+@ x1, y1, x2, y2
 
 
 
@@ -1206,7 +1616,8 @@ print("Dimensions: ", <v>dimensions_1<>.x1, <v>dimensions_1<>.y1, <v>dimensions_
 <col><c>'yellow'<><><col><c>'#ffff00'<><><col><yellow>●<><>
 <col><c>'yellowgreen'<><><col><c>'#9acd32'<><><col><yellowgreen>●<><><>
 @
-@ color types, names
+@ color types, names, table, chart, colors, colours
+
 
 
 # Acronyms
