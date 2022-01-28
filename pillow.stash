@@ -4,9 +4,6 @@
 An excellent Python image processing library.
 
 
-<image "pillow-example.webp">
-
-
 # Summary
 
 A current, maintained version if PIL.
@@ -107,6 +104,10 @@ Loop:
 
 <in-2>Loop infinitely - set to 0.<>
 
+Supported Extensions:
+
+<in-2>apng, gif, webp<>
+
 
 Examples:
 
@@ -140,10 +141,7 @@ def add_circle(<v>image<>, dimensions):
 
 ### Image File - Write Animated (Individual Image Durations)
 
-<cb><v>images<>[0].save(
-		<v>...<>
-		duration = [<v>duration_1<>, <v>duration_2<>, <v>...<>],
-		<v>...<>)<>
+<cb><v>images<>[0].save(<v>...<>, duration = [<v>duration_1<>, <v>duration_2<>, <v>...<>])<>
 
 <cb><v>images<>[0].save(
 		<v>file_name<>,
@@ -165,6 +163,10 @@ Duration:
 <in-2>Pass in a list of durations.
 Values must be >= 20.<>
 
+Supported Extensions:
+
+<in-2>apng, gif, webp<>
+
 
 Example:
 
@@ -172,25 +174,26 @@ Example:
 from PIL.ImageDraw import Draw
 from math import pi, sin
 
-def generate_images(size):
-
-	<v>width<> = size[0]
-	<v>height<> = size[1]
-
-	<v>y_factor<> = 1 / <v>width<> * 2 * pi
-	<v>calc_y<> = lambda <v>x<>: int( <v>height<> / 2 + sin(<v>x<> * <v>y_factor<>) * <v>height<> / 2)
-	<v>calc_dimensions<> = lambda <v>x<>: (<v>x<>, <v>calc_y<>(<v>x<>), 20 + <v>x<>, 20 + <v>calc_y<>(<v>x<>))
-
-	<v>images<> = []
-	<v>background<> = Image.new('RGBA', size, '#303030')
-	for <v>x<> in range(0, <v>width<>, 10):
-		<v>images<>.append(add_circle(<v>background<>.copy(), calc_dimensions(<v>x<>)))
-
-	return <v>images<>
-
 def add_circle(<v>image<>, dimensions):
 	Draw(<v>image<>).ellipse(dimensions, 'yellow')
 	return <v>image<>
+
+def calculate_y(<v>size<>, x):
+	<v>width<>, <v>height<> = <v>size<>
+	<v>y_factor<> = 1 / <v>width<> * 2 * pi
+	return int( <v>height<> / 2 + sin(<v>x<> * <v>y_factor<>) * <v>height<> / 2)
+
+def calculate_dimensions(size, x):
+	return (<v>x<>, <v>calculate_y<>(<v>size<>, <v>x<>), <v>x<> + 20, <v>calculate_y<>(<v>size<>, <v>x<>) + 20)
+
+def generate_images(<v>size<>):
+	<v>width<> = <v>size<>[0]
+	<v>images<> = []
+	<v>background<> = Image.new('RGBA', <v>size<>, '#303030')
+	for <v>x<> in range(0, <v>width<>, 10):
+		<v>images<>.append(add_circle(<v>background<>.copy(), calculate_dimensions(<v>size<>, <v>x<>)))
+
+	return <v>images<>
 
 <v>images<> = generate_images((<v>160<>, <v>100<>))
 <v>durations<> = [<v>20<>, <v>20<>, <v>20<>, <v>40<>, <v>40<>, <v>40<>, <v>60<>, <v>60<>, <v>60<>, <v>80<>, <v>80<>, <v>80<>, <v>80<>, <v>60<>, <v>40<>, <v>20<>]
@@ -230,6 +233,8 @@ Full Form:
 <col>color<><col>(tuple)<><col><code>(<v>red<>, <v>blue<>, <v>green<>)
 (<v>red<>, <v>blue<>, <v>green<>, <v>alpha<>)<><><>
 
+Returns: <c>PIL.Image.Image<>
+
 
 Creates a new image of the given size and color.
 
@@ -257,6 +262,8 @@ Full Form:
 
 = Image.new('RGBA', <v>size<>)<>
 
+Returns: <c>PIL.Image.Image<>
+
 
 Creates a completely transparent image.
 
@@ -281,6 +288,10 @@ Full Form:
 <cb>from PIL import Image
 
 = Image.fromarray(<v>list_1<>)<>
+
+
+Returns: <c>PIL.Image.Image<>
+
 
 See:
 <l>https://stackoverflow.com/questions/14452824/how-can-i-save-an-image-with-pil<><>
@@ -651,6 +662,90 @@ Returns: <c>tuple (width, height)<>
 @ add
 
 
+### Draw - Arc
+
+<cb><v>draw_1<>.arc((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>start_degree<>, <v>end_degree<>, <v>color<>)<>
+
+Full Form:
+
+<cb>from PIL.ImageDraw import Draw
+
+<v>draw<> = Draw(<v>image_1<>)
+
+<v>draw<>.arc(<v>dimensions<>, <v>start_degree<>, <v>end_degree<>, <v>color<>)
+<v>draw<>.arc((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>start_degree<>, <v>end_degree<>, <v>color<>)<>
+
+
+Draws a 1 pixel wide arc.
+
+The arc is carved with given angle and center in the middle of the dimensions.
+The degrees are measured clockwise from 3 o'clock. <s>(why??!!)<>
+
+3 o'clock = 0
+6 o'clock = 90
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.arc((<v>40<>, <v>10<>, <v>120<>, <v>90<>), <v>0<>, <v>60<>, '<v>lime<>')
+
+<v>image<>.show()<>
+@
+@ arcs, circumference, curve
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .arc()
+
+
+
+### Draw - Chord
+
+<cb><v>draw_1<>.chord((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>start_degree<>, <v>end_degree<>, <v>fill_color<>)<>
+
+Full Form:
+
+<cb>from PIL.ImageDraw import Draw
+
+<v>draw<> = Draw(<v>image_1<>)
+
+<v>draw<>.chord(<v>dimensions<>, <v>start_degree<>, <v>end_degree<>, <v>fill_color<>)
+<v>draw<>.chord(<v>dimensions<>, <v>start_degree<>, <v>end_degree<>, <v>fill_color<>, <v>outline_color<>)
+<v>draw<>.chord((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>start_degree<>, <v>end_degree<>, <v>fill_color<>)<>
+
+
+Draws a partial circle.
+
+Draws an arc, connects the two end points and fills in the enclosed area.
+The arc is carved with given angle and center in the middle of the dimensions.
+The degrees are measured clockwise from 3 o'clock. <s>(why??!!)<>
+
+3 o'clock = 0
+6 o'clock = 90
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.chord((<v>40<>, <v>10<>, <v>120<>, <v>90<>), <v>0<>, <v>-135<>, '<v>lime<>', '<v>green<>')
+
+<v>image<>.show()<>
+@
+@ arcs, circumference, curve
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .chord()
+
+
+
 ### Draw - Ellipse
 
 <cb><v>draw_1<>.ellipse(<v>dimensions<>, <v>fill_color<>)<>
@@ -689,9 +784,9 @@ from PIL.ImageDraw import Draw
 
 <v>image<>.show()<>
 @
-@ fill, circles, ellipses
+@ fill, circles, ellipses, ovals
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .ellipse()
+@ .ellipse(), .create_oval()
 
 
 
@@ -735,7 +830,7 @@ from PIL.ImageDraw import Draw
 @
 @ fill, lines, width, wide
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .line()
+@ .line(), .create_line()
 
 
 
@@ -795,6 +890,47 @@ from PIL.ImageDraw import Draw
 
 
 
+### Draw - Pie Slice
+
+<cb><v>draw_1<>.pieslice((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>start_degree<>, <v>end_degree<>, <v>color<>)<>
+
+Full Form:
+
+<cb>from PIL.ImageDraw import Draw
+
+<v>draw<> = Draw(<v>image_1<>)
+
+<v>draw<>.pieslice(<v>dimensions<>, <v>start_degree<>, <v>end_degree<>, <v>color<>)
+<v>draw<>.pieslice((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>start_degree<>, <v>end_degree<>, <v>color<>)<>
+
+
+Draws a wedge or pie slice.
+
+The degrees are the angle carved by the slice centered in the given dimensions.
+The angles are calculated clockwise from 3 o'clock. <s>(why??!!)<>
+
+3 o'clock = 0
+6 o'clock = 90
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.pieslice((<v>40<>, <v>10<>, <v>120<>, <v>90<>), <v>0<>, <v>60<>, '<v>lime<>')
+
+<v>image<>.show()<>
+@
+@ packman, circumference, partial, semicircle, semi-circle, wedge
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ .pieslice()
+
+
+
 ### Draw - Point
 
 <cb><v>draw_1<>.point((<v>x<>, <v>y<>), <v>color<>)<>
@@ -824,7 +960,7 @@ from PIL.ImageDraw import Draw
 
 <v>image<>.show()<>
 @
-@ points
+@ points, dots
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
 @ .point()
 
@@ -966,6 +1102,44 @@ from PIL.ImageDraw import Draw
 
 
 
+### Draw - Text
+
+<cb>= <v>draw<>.text((<v>x<>, <v>y<>), <v>color<>, font = <v>font<>)<>
+
+Full Form:
+
+<cb>from PIL.ImageDraw import Draw
+from PIL.ImageFont import truetype
+
+<v>draw<> = Draw(<v>image_1<>)
+<v>draw<>.text((<v>x<>, <v>y<>), <v>color<>, font = <v>font<>)
+<v>draw<>.text((<v>x<>, <v>y<>), <v>color<>, font = truetype('<v>font_name<>', <v>font_size<>))<>
+
+
+Adds text to an image.
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+from PIL.ImageFont import truetype
+
+<v>font<> = truetype('<v>Helvetica<>', <v>16<>)
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.text((<v>10<>, <v>10<>), '<v>Image Text<>', '<v>lime<>', font = <v>font<>)
+
+<v>image<>.show()<>
+@
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ pil.ImageFont.truetype(), ImageFont.truetype(), .truetype()
+@ .text(), .truetype()
+@ string, font
+
+
+
 # Tools
 
 
@@ -1035,6 +1209,38 @@ Draw(<v>image<>).ellipse((40, 10, 120, 90), <v>MAGENTA<>)
 <v>image<>.show()<>
 @
 @ named
+
+
+
+### Font - Get
+
+<cb>= truetype(<v>font_name<>, <v>font_size<>)<>
+
+Full Form:
+
+<cb>from PIL.ImageFont import truetype
+
+= truetype(<v>font_name<>, <v>font_size<>)<>
+
+
+Returns a font usable for adding text to an image.
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+from PIL.ImageFont import truetype
+
+<v>font<> = truetype('<v>Helvetica<>', <v>16<>)
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.text((<v>10<>, <v>10<>), '<v>Image Text<>', '<v>lime<>', font = <v>font<>)
+
+<v>image<>.show()<>
+@
+@ pil.ImageFont.truetype(), ImageFont.truetype(), .truetype()
 
 
 
@@ -1378,6 +1584,51 @@ print(<v>point_1<>, ":", <v>point_1<>.x, <v>point_1<>.y)
 
 
 
+### Named Tuple - Rectangle
+
+<cb>= Rectangle(<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>)<>
+
+Define Type:
+
+<cb>from collections import namedtuple
+
+<v>Rectangle<> = namedtuple("Rectangle", ["x1", "y1", "x2", "y2"])<>
+
+Use:
+
+<cb><v>rectangle_1<> = Rectangle(<v>0<>, <v>0<>, <v>20<>, <v>40<>)
+
+Draw(<v>image<>).eclipse(<v>rectangle_1<>, <v>color<>)
+<v>x1<> = <v>rectangle_1<>.x1<>
+
+
+This is a drop in replacement for the (x1, y1, x2, y2) dimension tuple.
+To make working with dimension data easier, create this namedtuple and use in place of plain dimensional tuples.
+
+
+Example:
+
+<cb>from collections import namedtuple
+from PIL import Image
+from PIL.ImageDraw import Draw
+
+Rectangle = namedtuple("Rectangle", ["x1", "y1", "x2", "y2"])
+
+<v>rectangle_1<> = Rectangle(<v>40<>, <v>10<>, <v>120<>, <v>90<>)
+
+<v>image<> = Image.new('RGBA', (160, 100), 'dimgrey')
+Draw(<v>image<>).ellipse(<v>rectangle_1<>, 'yellow')
+<v>image<>.show()
+
+print(<v>rectangle_1<>, ":", <v>rectangle_1<>.x1, <v>rectangle_1<>.y1, <v>rectangle_1<>.x2, <v>rectangle_1<>.y2)
+
+<#># Prints:
+\# "Rectangle(x1=40, y1=10, x2=120, y2=90) : 40 10 120 90"<><>
+@
+@ x1, y1, x2, y2, dimensions
+
+
+
 ### Named Tuple - Size
 
 <cb>= Size(<v>width<>, <v>height<>)<>
@@ -1417,51 +1668,6 @@ print(<v>size_1<>, ":", <v>size_1<>.width, <v>size_1<>.height)
 <#># Prints: "Size(width=160, height=100) : 160 100"<><>
 @
 @ height, width
-
-
-
-### Named Tuple - Dimensions
-
-<cb>= Dimensions(<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>)<>
-
-Define Type:
-
-<cb>from collections import namedtuple
-
-<v>Dimensions<> = namedtuple("Dimensions", ["x1", "y1", "x2", "y2"])<>
-
-Use:
-
-<cb><v>dimensions_1<> = Dimensions(<v>0<>, <v>0<>, <v>20<>, <v>40<>)
-
-Draw(<v>image<>).eclipse(<v>dimensions_1<>, <v>color<>)
-<v>x1<> = <v>dimensions_1<>.x1<>
-
-
-This is a drop in replacement for the (x1, y1, x2, y2) dimension tuple.
-To make working with dimension data easier, create this namedtuple and use in place of plain dimensional tuples.
-
-
-Example:
-
-<cb>from collections import namedtuple
-from PIL import Image
-from PIL.ImageDraw import Draw
-
-Dimensions = namedtuple("Dimensions", ["x1", "y1", "x2", "y2"])
-
-<v>dimensions_1<> = Dimensions(<v>40<>, <v>10<>, <v>120<>, <v>90<>)
-
-<v>image<> = Image.new('RGBA', (160, 100), 'dimgrey')
-Draw(<v>image<>).ellipse(<v>dimensions_1<>, 'yellow')
-<v>image<>.show()
-
-print(<v>dimensions_1<>, ":", <v>dimensions_1<>.x1, <v>dimensions_1<>.y1, <v>dimensions_1<>.x2, <v>dimensions_1<>.y2)
-
-<#># Prints:
-\# "Dimensions(x1=40, y1=10, x2=120, y2=90) : 40 10 120 90"<><>
-@
-@ x1, y1, x2, y2
 
 
 
