@@ -39,9 +39,13 @@ Add:
 @ install, download
 
 
+### Import
+
+<cb>from PIL import Image<>
+
+
 
 # File Functions
-
 
 
 ### Image File - Read
@@ -281,20 +285,82 @@ Examples:
 
 ### Image - Create From Array
 
-<cb>= Image.fromarray()<>
+<cb>= Image.fromarray(<v>array_1<>, '<v>RGBA<>')<>
 
 Full Form:
 
 <cb>from PIL import Image
 
-= Image.fromarray(<v>list_1<>)<>
+= Image.fromarray(<v>array_1<>, '<v>mode<>')<>
 
+
+Returns: <c>PIL.Image.Image<>
+@
+@ Image.fromarray(), .fromarray(), convert
+@ new
+
+
+
+### Image - Create From NumPy Array
+
+<cb>= Image.fromarray(<v>numpy_array<>, '<v>RGBA<>')<>
+
+Full Form:
+
+<cb>from PIL import Image
+
+= Image.fromarray(<v>numpy_array<>, '<v>mode<>')<>
 
 Returns: <c>PIL.Image.Image<>
 
 
-See:
-<l>https://stackoverflow.com/questions/14452824/how-can-i-save-an-image-with-pil<><>
+Creates an image from a NumPy array.
+
+The array should be of shape (<v>height<>, <v>width<>, 3).
+
+Axis 0 contains the image rows.
+Axis 1 contains the column pixels.
+Axis 2 contains the [red, green, blue] pixel color data.
+
+Values must be of type <c>np.int8<>.
+
+
+Example:
+
+Checkered Red and Black Rectangle:
+
+<cb>from PIL import Image
+import numpy as np
+from numpy import array
+
+<v>data<> = array([
+        [(255, 0, 0),
+         (255, 0, 0),
+         (255, 0, 0),
+         (0, 0, 0),
+         (0, 0, 0),
+         (0, 0, 0)],
+        [(255, 0, 0),
+         (255, 0, 0),
+         (255, 0, 0),
+         (0, 0, 0),
+         (0, 0, 0),
+         (0, 0, 0)],
+        [(0, 0, 0),
+         (0, 0, 0),
+         (0, 0, 0),
+         (255, 0, 0),
+         (255, 0, 0),
+         (255, 0, 0)],
+        [(0, 0, 0),
+         (0, 0, 0),
+         (0, 0, 0),
+         (255, 0, 0),
+         (255, 0, 0),
+         (255, 0, 0)]])
+
+<v>image<> = Image.fromarray(<v>data<>.astype(np.int8), 'RGB')
+<v>image<>.show()<>
 @
 @ Image.fromarray(), .fromarray(), convert
 @ new
@@ -510,7 +576,7 @@ Image.LANCZOS
 \#1  -  <c><v>width<><> and <c><v>height<><> must be integers.
 
 
-Exapmle:
+Example:
 
 <cb><v>resized<> = <v>image_1<>.resize((160, 90), Image.LANCZOS)<>
 
@@ -620,6 +686,37 @@ Draw(<v>image_2<>).ellipse((70, 10, 150, 90), 'lime')
 
 
 
+### Image - To List
+
+<cb>= list(<v>image<>.getdata())<>
+
+
+Returns a list of image pixel values.
+
+The list is one dimensional, with length = number of pixels.
+If the image is 'RGB', each value will be an RGB tuple.
+If the image is 'RGBA', each value will be an RGBA tuple.
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+<v>image<> = Image.new('RGB', (6,4))
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.rectangle((0, 0, 2, 1), 'red')
+<v>draw<>.rectangle((3, 2, 5, 3), 'red')
+
+<v>data<> = list(<v>image<>.getdata())
+
+<#># Returns: [255, 255, 255, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 255, 255, 255]<><>
+@
+@ image.getdata(), .getdata(), getdata
+@ convert, conversion, raw data
+
+
+
 ### Image - View
 
 <cb><v>image<>.show()<>
@@ -635,9 +732,47 @@ Shows the image in using the default OS viewer.
 
 
 
+### Image Properties - Color Channels
+
+<cb>= <v>image<>.split()<>
+
+Returns: <c>tuple of PIL.Image.Image<>
+
+
+Returns the image split into color channels.
+
+The channels are returned as a tuple.
+Each channel is returned as a new gray scale image.
+'RGB' images return 3 channels.
+'RGBA' images return 4 channels.
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+<v>image<> = Image.new('RGB', (6,4))
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.rectangle((0, 0, 2, 1), 'red')
+<v>draw<>.rectangle((3, 2, 5, 3), 'red')
+
+<v>red<>, <v>green<>, <v>blue<> = <v>image<>.split()
+
+print(list(<v>red<>.getdata()))
+
+<#># Prints: [255, 255, 255, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 255, 255, 255]<><>
+@
+@ image.split(), .split()
+@ separate color channels, rgb, rgba
+
+
+
 ### Image Properties - Size
 
 <cb>= <v>image<>.size<>
+
+<cb><v>width<>, <v>height<> = <v>image<>.size<>
 
 Returns: <c>tuple (width, height)<>
 @
@@ -1287,6 +1422,164 @@ from PIL.ImageDraw import Draw
 
 
 
+### Image - Create Image - Black and White - From List
+
+<cb><v>image<> = Image.new('L', (<v>width<>, <v>height<>))
+<v>image<>.putdata(<v>pixels<>)<>
+
+Usage:
+
+<cb>from PIL import Image
+
+<v>image<> = Image.new('L', (<v>width<>, <v>height<>))
+<v>image<>.putdata(<v>pixels<>)<>
+
+
+Creates a black and white image from a list of values.
+
+The list must be 1 dimensional.
+The values must be integers.
+
+
+Example:
+
+Checkered Black and White Rectangle:
+
+<cb>from PIL import Image
+
+<v>width<> = 6
+<v>height<> = 4
+
+<v>data<> = [255, 255, 255,   0,   0,   0,
+		255, 255, 255,   0,   0,   0,
+		  0,   0,   0, 255, 255, 255,
+		  0,   0,   0, 255, 255, 255]
+
+<v>image<> = Image.new('L', (<v>width<>, <v>height<>))
+<v>image<>.putdata(<v>data<>)
+<v>image<>.show()<>
+
+
+
+### Image - Create Image - RGB - From List
+
+<cb><v>image<> = Image.new('RGB', (<v>width<>, <v>height<>))
+<v>image<>.putdata(<v>rgb_pixels<>)<>
+
+Usage:
+
+<cb>from PIL import Image
+
+<v>image<> = Image.new('RGB', (<v>width<>, <v>height<>))
+<v>image<>.putdata(<v>rgb_pixels<>)<>
+
+
+Creates an image from a list of RGB values.
+
+The list must be 1 dimensional.
+The values must be RGB tuples (lists are not accetped).
+
+
+Example:
+
+Checkered Red and Black Rectangle:
+
+<cb>from PIL import Image
+
+<v>width<> = 6
+<v>height<> = 4
+
+<v>data<> = [(255, 0, 0),
+        (255, 0, 0),
+        (255, 0, 0),
+        (0, 0, 0),
+        (0, 0, 0),
+        (0, 0, 0),
+        (255, 0, 0),
+        (255, 0, 0),
+        (255, 0, 0),
+        (0, 0, 0),
+        (0, 0, 0),
+        (0, 0, 0),
+        (0, 0, 0),
+        (0, 0, 0),
+        (0, 0, 0),
+        (255, 0, 0),
+        (255, 0, 0),
+        (255, 0, 0),
+        (0, 0, 0),
+        (0, 0, 0),
+        (0, 0, 0),
+        (255, 0, 0),
+        (255, 0, 0),
+        (255, 0, 0)]
+
+<v>image<> = Image.new('RGB', (<v>width<>, <v>height<>))
+<v>image<>.putdata(<v>data<>)
+<v>image<>.show()<>
+@
+@ image.putdata(), .putdata(), putdata()
+@ from list, red, green, blue
+
+
+
+### Image - Create Image - RGB - From Numpy Color Channels
+
+<cb><v>rgb<> = np.concatenate(
+		(<v>red<>[:,:,newaxis],
+		 <v>blue<>[:,:,newaxis],
+		 <v>green<>[:,:,newaxis]),
+		axis = 2)
+
+= Image.fromarray(<v>rgb<>.astype(np.int8))<>
+
+
+Convert the raw channel data into a grid of RGB pixels.
+Then create the image with <c>.fromarray()<>.
+Ensure the data is of type <c>np.int8<>.
+
+Each channel should be of shape (<v>height<>, <v>width<>).
+Each color should be in range 0 - 255.
+
+
+Example:
+
+<cb>import numpy as np
+from numpy import array, newaxis
+from PIL import Image
+
+<v>red<> = array([
+    [255, 255, 255, 0, 0, 0],
+    [255, 255, 255, 0, 0, 0],
+    [0, 0, 0, 255, 255, 255],
+    [0, 0, 0, 255, 255, 255]])
+
+<v>green<> = array([
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0]])
+
+<v>blue<> = array([
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0]])
+
+<v>rgb_data<> = np.concatenate(
+		(<v>red<>[:,:,newaxis],
+		 <v>blue<>[:,:,newaxis],
+		 <v>green<>[:,:,newaxis]), axis = 2)
+
+<v>image<> = Image.fromarray(<v>rgb_data<>.astype(np.int8), 'RGB')
+<v>image<>.show()<>
+@
+@ pil.image.fromarray(), image.fromarray(), .fromarray()
+@ numpy, np
+@ arrays, red, green, blue
+
+
+
 ### Image Effect - Gradient Background
 
 Stack Overflow:
@@ -1823,6 +2116,204 @@ print(<v>size_1<>, ":", <v>size_1<>.width, <v>size_1<>.height)
 <col><c>'yellowgreen'<><><col><c>'#9acd32'<><><col><yellowgreen>●<><><>
 @
 @ color types, names, table, chart, colors, colours
+
+
+
+# Reference - Filters
+
+
+## Filter - Basics
+
+Types:
+
+<cb>Image.ANTIALIASED
+Image.BICUBIC
+Image.BILINEAR
+Image.BOX
+Image.HAMMING
+Image.LANCZOS
+Image.NEAREST<>
+
+Usage:
+
+<cb>from PIL import Image
+
+<v>image<>.resize(<v>...<>, filter = Image.<v>filter<>)<>
+
+
+## Filter - Details
+
+
+### Filter - Anti-aliased
+
+<cb>= Image.ANTIALIASED<>
+
+Usage:
+
+<cb>from PIL import Image
+
+= Image.ALIASED<>
+@
+@ Image.ANTIALIASED
+@ resize, thumbnail
+
+
+
+### Filter - Bicubic
+
+<cb>= Image.BICUBIC<>
+
+Usage:
+
+<cb>from PIL import Image
+
+= Image.BICUBIC<>
+
+
+Produces better image quality of all filters except LANCZOS.
+
+Uses cubic interpolation on all pixels.
+@
+@ Image.BICUBIC
+@ resize, thumbnail
+
+
+
+### Filter - Bilinear
+
+<cb>= Image.BILINEAR<>
+
+Usage:
+
+<cb>from PIL import Image
+
+= Image.BILINEAR<>-
+
+
+Uses linear interpolation on all pixels.
+@
+@ Image.BILINEAR
+@ resize, thumbnail
+
+
+
+### Filter - Box
+
+<cb>= Image.BOX<>
+
+Usage:
+
+<cb>from PIL import Image
+
+= Image.BOX<>
+
+
+Uses equal weights for each source pixel that contributes to a target pixel.
+@
+@ Image.BOX
+@ resize, thumbnail
+
+
+
+### Filter - Hamming
+
+<cb>= Image.HAMMING<>
+
+Usage:
+
+<cb>from PIL import Image
+
+= Image.HAMMING<>
+
+
+Produces a sharper image than BILINEAR.
+Doesn't have dislocations on a local level unlike BOX which may.
+@
+@ Image.HAMMING
+@ resize, thumbnail
+
+
+
+### Filter - Lanczos
+
+<cb>= Image.LANCZOS<>
+
+Usage:
+
+<cb>from PIL import Image
+
+= Image.LANCZOS<>
+
+
+Slowest of the filters but produces the best image quality.
+
+Uses high-quality Lanczos filter (truncated sinc).
+@
+@ Image.LANCZOS
+@ resize, thumbnail
+
+
+
+### Filter - Nearest
+
+<cb>= Image.NEAREST<>
+
+Usage:
+
+<cb>from PIL import Image
+
+= Image.NEAREST<>
+
+
+Fastest of the filters, but also produces the worst quality.
+@
+@ Image.NEAREST
+@ resize, thumbnail
+
+
+
+# Reference - Modes
+
+Mode Parameter:
+
+<cb>(<v>...<>, mode = '<v>mode<>')<>
+
+Mode is case sensitive.
+
+<card><table><col><b>Mode<>	<><col><b>Pixels<><><col><b>Color<><>
+<col> <>
+<col><c>1<><><col>1-bit<><col>Black And White<^><#>1<><><>
+<col><c>CMYK<><><col>4x8-bit<><col>Color Separation<>
+<col><c>HSV<><><col>3x8-bit<><col>Hue, Saturation, Value<>
+<col><c>L<><><col>8-bit<><col>Black And White<>
+<col><c>LAB<><><col>3x8-bit<><col>L*a*b Color Space<>
+<col><c>P<><><col>8-bit<><col>Using Color Palette<^><#>2<><><>
+<col><c>RGB<><><col>3x8-bit<><col>True Color<>
+<col><c>RGBA<><><col>4x8-bit<><col>True Color, Transparency Mask<>
+<col><c>YCbCr<><><col>3x8-bit<><col>Color Video Format<^><#>3<><><>
+<col> <>
+<col><c>F<><><col>32-bit Floating Point<><col>n/a<>
+<col><c>I<><><col>32-bit Signed Integer<><col>n/a<>
+<><>
+
+<card><table><col>1-bit<><col>Black And White<^><#>1<><><><col><c>1<><>
+<col>3x8-bit<><col>Color Video Format<^><#>3<><><><col><c>YCbCr<><>
+<col>3x8-bit<><col>Hue, Saturation, Value<><col><c>HSV<><>
+<col>3x8-bit<><col>L*a*b Color Space<><col><c>LAB<><>
+<col>3x8-bit<><col>True Color<><col><c>RGB<><>
+<col>4x8-bit<><col>Color Separation<><col><c>CMYK<><>
+<col>4x8-bit<><col>True Color, Transparency Mask<><col><c>RGBA<><>
+<col>8-bit<><col>Black And White<><col><c>L<><>
+<col>8-bit<><col>Using Color Palette<^><#>3<><><><col><c>P<><>
+<col> <>
+<col>32-bit Floating Point<><col>n/a<><col><c>F<><>
+<col>32-bit Signed Integer<><col>n/a<><col><c>I<><><><>
+
+1 - Stored 1 Pixel Per Byte
+2 - Maps To Another Mode Using A Color Palette
+3 - JPEG Standard, Not Itu-r Bt.2020 Standard
+@
+@ TODO
 
 
 
