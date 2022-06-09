@@ -1,23 +1,46 @@
 # <#>Pillow<> SpeedSheet
-<b>Find what you need, faster.<>
+<b>Find it faster.<>
 
-An excellent Python image processing library.
+This is an interactive <b>Pillow<> cheat sheet. Pillow is an excellent Python image processing library. Use the search to instantly get answers.
+
+
+<table><col><b>Basics<>					
+
+<*><link "?q=hello+world">Hello World<>
+<link "?q=install">Installing<><>
+
+<*><link "?q=image-functions-only+create">Image Creation<>
+<link "?q=image-functions-only">Image Functions<>
+<link "?q=image-properties-only">Image Properties<>
+<link "?q=draw-only">Drawing Functions<>
+<link "?q=files-only">File IO<><>
+
+<*><link "?q=tools-only">Tools<>
+<link "?q=how-to-only">How Tos<><>
+
+<*><link "?q=online-docs">Online Docs<><><><col><b>Reference<>
+
+<*><link "?q=data-types-only">Data Types<>
+<link "?q=named-types-only#named_tuples_-_all">Data Types / As Named Tuples<><>
+
+<*><link "?q=colors-only">Colors<>
+<link "?q=filters-only">Filters<><><><>
+
 
 
 # Summary
 
 A current, maintained version if PIL.
+@
+@ links, online, online-docs-only
 
-
-### Links
-
-Official:
+### Official
 <l>https://pillow.readthedocs.io/en/stable/index.html<>
 
-Source:
+### Source
 <l>https://github.com/python-pillow/Pillow<>
 
-Pypi:
+### Pypi
 <l>https://pypi.org/project/Pillow/<>
 
 
@@ -27,6 +50,7 @@ Pypi:
 <cb>pip3 install Pillow<>
 @
 @ install, download
+@ install-only
 
 
 
@@ -37,6 +61,8 @@ Add:
 <cb>Pillow<>
 @
 @ install, download
+@ install-only
+
 
 
 ### Import
@@ -45,14 +71,79 @@ Add:
 
 
 
+# Hello World
+@
+@ Examples
+
+
+
+### Hello World
+
+Create and run the following python script. This will create an image of a green rectangle.
+
+
+File Name:
+
+<cb>hello.py<>
+
+File Contents:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.rectangle((10, 10, 150, 90), fill = (127, 255, 127))
+
+<v>image<>.show()<>
+
+Run From The Command-line:
+
+<cb>python3 hello.py<>
+
+
+
+### Hello World - 'Hello World' Text
+
+Create and run the following python script. This will create an image with the words 'Hello World'.
+
+
+File Name:
+
+<cb>hello.py<>
+
+File Contents:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+from PIL.ImageFont import truetype
+
+<v>font<> = truetype('<v>Arial<>', <v>24<>)
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>145<>, <v>38<>), (64, 64, 64))
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.text((<v>10<>, <v>5<>), '<v>Hello World<>', '<v>lime<>', font = <v>font<>)
+
+<v>image<>.show()<>
+
+Run From The Command-line:
+
+<cb>python3 hello.py<>
+
+
+
 # File Functions
+@
+@ io, io-only
+@ file-only, files-only
 
 
 ### Image File - Read
 
 <cb>= Image.open()<>
 
-Full Form:
+Usage:
 
 <cb>from PIL import Image
 
@@ -216,13 +307,15 @@ def generate_images(<v>size<>):
 
 
 # Image Functions
+@
+@ image-functions-only, image-function-only, manipulation-only
 
 
 ### Image - Create
 
 <cb>= Image.new(<v>mode<>, <v>size<>, <v>color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL import Image
 
@@ -260,7 +353,7 @@ Colored Black:
 
 <cb>= Image.new('RGBA', <v>size<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL import Image
 
@@ -287,7 +380,7 @@ Examples:
 
 <cb>= Image.fromarray(<v>array_1<>, '<v>RGBA<>')<>
 
-Full Form:
+Usage:
 
 <cb>from PIL import Image
 
@@ -305,7 +398,7 @@ Returns: <c>PIL.Image.Image<>
 
 <cb>= Image.fromarray(<v>numpy_array<>, '<v>RGBA<>')<>
 
-Full Form:
+Usage:
 
 <cb>from PIL import Image
 
@@ -646,7 +739,7 @@ Example:
 
 <cb>= Image.blend(<v>image_1<>, <v>image_2<>, <v>alpha<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL import Image
 
@@ -729,6 +822,9 @@ Shows the image in using the default OS viewer.
 
 
 # Image Properties
+@
+@ property-only, properties-only
+@ image-property-only, image-properties-only
 
 
 
@@ -795,13 +891,14 @@ Returns: <c>tuple (width, height)<>
 # Image Drawing Functions
 @
 @ add
+@ draw-only, drawing-only
 
 
 ### Draw - Arc
 
 <cb><v>draw_1<>.arc((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>start_degree<>, <v>end_degree<>, <v>color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 
@@ -834,7 +931,7 @@ from PIL.ImageDraw import Draw
 @
 @ arcs, circumference, curve
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .arc()
+@ draw.arc(), .arc()
 
 
 
@@ -842,7 +939,7 @@ from PIL.ImageDraw import Draw
 
 <cb><v>draw_1<>.chord((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>start_degree<>, <v>end_degree<>, <v>fill_color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 
@@ -877,7 +974,7 @@ from PIL.ImageDraw import Draw
 @
 @ arcs, circumference, curve
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .chord()
+@ draw.chord(), .chord()
 
 
 
@@ -887,7 +984,7 @@ from PIL.ImageDraw import Draw
 
 <cb><v>draw_1<>.ellipse((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>fill_color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 
@@ -921,7 +1018,7 @@ from PIL.ImageDraw import Draw
 @
 @ fill, circles, ellipses, ovals
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .ellipse(), .create_oval()
+@ draw.ellipse(), draw.create_oval(), .ellipse(), .create_oval()
 
 
 
@@ -931,7 +1028,7 @@ from PIL.ImageDraw import Draw
 
 <cb><v>draw_1<>.line((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>fill_color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 
@@ -965,7 +1062,7 @@ from PIL.ImageDraw import Draw
 @
 @ fill, lines, width, wide
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .line(), .create_line()
+@ draw.line(), .line(), draw.create_line(), .create_line()
 
 
 
@@ -975,7 +1072,7 @@ from PIL.ImageDraw import Draw
 
 <cb><v>draw_1<>.line(((<v>x1<>, <v>y1<>), (<v>x2<>, <v>y2<>), <v>...<>), <v>fill_color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 
@@ -1021,7 +1118,46 @@ from PIL.ImageDraw import Draw
 @
 @ fill, width, wide
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .line()
+@ draw.line(), .line()
+
+
+
+### Draw - Line - Multiple Lines, Curved Joins
+
+<cb><v>draw_1<>.line(<v>xy_points<>, <v>fill_color<>, <v>width<>, joint = 'curve')<>
+
+Usage:
+
+<cb>from PIL.ImageDraw import Draw
+
+<v>draw<> = Draw(<v>image_1<>)
+
+<v>draw<>.line(<v>xy_points<>, <v>fill_color<>, <v>width<>, joint = 'curve')
+<v>draw<>.line(<v>xy_points<>, fill = <v>fill_color<>, width = <v>width<>, joint = 'curve')<>
+
+
+Draws a series of connected lines where the joints are rounded.
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>320<>, <v>200<>), (64, 64, 64))
+
+<v>xy_points<> = ((300, 100), (20, 100), (90, 20), (90, 180), (230, 20), (230, 180))
+
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.line(<v>xy_points<>, fill='yellow', width=10, joint='curve')
+
+<v>image<>.show()<>
+@
+@ fill, width, wide
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ draw.line(), .line()
+@ joint='curve', joint, 'curve'
+@ rounded joins
 
 
 
@@ -1029,7 +1165,7 @@ from PIL.ImageDraw import Draw
 
 <cb><v>draw_1<>.pieslice((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>start_degree<>, <v>end_degree<>, <v>color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 
@@ -1062,7 +1198,7 @@ from PIL.ImageDraw import Draw
 @
 @ packman, circumference, partial, semicircle, semi-circle, wedge
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .pieslice()
+@ draw.pieslice(), .pieslice()
 
 
 
@@ -1070,7 +1206,7 @@ from PIL.ImageDraw import Draw
 
 <cb><v>draw_1<>.point((<v>x<>, <v>y<>), <v>color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 
@@ -1097,7 +1233,7 @@ from PIL.ImageDraw import Draw
 @
 @ points, dots
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .point()
+@ draw.point(), .point()
 
 
 
@@ -1107,7 +1243,7 @@ from PIL.ImageDraw import Draw
 
 <cb><v>draw_1<>.point(((<v>x1<>, <v>y1<>), (<v>x2<>, <v>y2<>), <v>...<>), <v>color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 
@@ -1136,7 +1272,7 @@ from PIL.ImageDraw import Draw
 @
 @ fill
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .point()
+@ draw.point(), .point()
 
 
 
@@ -1144,7 +1280,7 @@ from PIL.ImageDraw import Draw
 
 <cb><v>draw_1<>.polygon(<v>xy_points<>, <v>color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 
@@ -1169,13 +1305,13 @@ from PIL.ImageDraw import Draw
 
 <v>draw<>.polygon(
 		((80, 20), (80, 80), (20, 50)),
-		fill = (255, 255, 0))
+		fill = 'yellow')
 
 <v>image<>.show()<>
 @
 @ fill, polygons, shapes
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .polygon()
+@ draw.polygon(), .polygon()
 
 
 
@@ -1188,8 +1324,25 @@ Use <c>line()<>:
 <cb><v>draw_1<>.line(((<v>x1<>, <v>y1<>), (<v>x2<>, <v>y2<>), <v>...<>), <v>fill_color<>)<>
 
 Use the line() method and pass in a list of (x, y) points.
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = Draw(<v>image<>)
+
+<v>draw<>.polygon(
+		((80, 20), (80, 80), (20, 50)),
+		width = 5,
+		outline = 'yellow')
+
+<v>image<>.show()<>
 @
 @ polygons, image.line(), .line()
+@ draw.line(), .line()
 
 
 
@@ -1197,26 +1350,25 @@ Use the line() method and pass in a list of (x, y) points.
 
 <cb><v>draw_1<>.rectangle(<v>dimensions<>, <v>fill_color<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 
 <v>draw<> = Draw(<v>image_1<>)
 
-<v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>)<>
-
-<cb><v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>, <v>outline_color<>)<>
-
-<cb><v>draw<>.rectangle(<v>dimensions<>, fill = <v>fill_color<>, outline = <v>outline_color<>)<>
+<v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>)
+<v>draw<>.rectangle(<v>dimensions<>, <v>fill_color<>, <v>outline_color<>)
+<v>draw<>.rectangle(<v>dimensions<>, fill = <v>fill_color<>, outline = <v>outline_color<>)<>
 
 
-<c><v>dimensions<><> (tuple):
+Fills in a rectangular area in the image.
+
+
+<c>dimensions<> (tuple):
 
 <cb>= (<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
 = ((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
 
-
-Fills in a rectangular area in the image.
 
 
 Example:
@@ -1227,31 +1379,76 @@ from PIL.ImageDraw import Draw
 <v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
 
 <v>draw<> = Draw(<v>image<>)
-<v>draw<>.rectangle((10, 10, 150, 90), (127, 255, 127))
+<v>draw<>.rectangle((10, 10, 150, 90), fill = (127, 255, 127))
 
 <v>image<>.show()<>
 @
 @ fill, box, squares, rectangles
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
-@ .rectangle()
+@ draw.rectangle(), .rectangle()
+
+
+
+### Draw - Rectangle With Rounded Corners
+
+<cb><v>draw_1<>.rounded_rectangle(<v>dimensions<>, <v>radius<>, <v>fill_color<>)<>
+
+Usage:
+
+<cb>from PIL.ImageDraw import Draw
+
+<v>draw<> = Draw(<v>image_1<>)
+
+<v>draw<>.rounded_rectangle(<v>dimensions<>, <v>radius<> <v>fill_color<>)
+<v>draw<>.rounded_rectangle(<v>dimensions<>, <v>radius<>, <v>fill_color<>, <v>outline_color<>, <v>width<>)
+<v>draw<>.rounded_rectangle(<v>dimensions<>, radius = <v>width<>, fill = <v>fill_color<>, outline = <v>outline_color<>)<>
+
+
+Fills in a rectangular area in the image.
+
+
+<c>dimensions<> (tuple):
+
+<cb>= (<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
+= ((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
+
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.rounded_rectangle((10, 10, 150, 90), radius = <v>5<>, fill = (127, 255, 127))
+
+<v>image<>.show()<>
+@
+@ fill, box, squares, rectangles
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ draw.rounded_rectangle(), .rounded_rectangle()
 
 
 
 ### Draw - Text
 
-<cb>= <v>draw<>.text((<v>x<>, <v>y<>), <v>color<>, font = <v>font<>)<>
+<cb>= <v>draw<>.text((<v>x<>, <v>y<>), '<v>text<>', <v>color<>, font = <v>font<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageDraw import Draw
 from PIL.ImageFont import truetype
 
 <v>draw<> = Draw(<v>image_1<>)
-<v>draw<>.text((<v>x<>, <v>y<>), <v>color<>, font = <v>font<>)
-<v>draw<>.text((<v>x<>, <v>y<>), <v>color<>, font = truetype('<v>font_name<>', <v>font_size<>))<>
+<v>draw<>.text((<v>x<>, <v>y<>), '<v>text<>', <v>color<>, font = <v>font<>)
+<v>draw<>.text((<v>x<>, <v>y<>), '<v>text<>', <v>color<>, font = truetype('<v>font_name<>', <v>font_size<>))<>
 
 
 Adds text to an image.
+
+<c>x<>, <v>y<> defines the top, left corner.
 
 
 Example:
@@ -1270,12 +1467,54 @@ from PIL.ImageFont import truetype
 @
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
 @ pil.ImageFont.truetype(), ImageFont.truetype(), .truetype()
-@ .text(), .truetype()
+@ draw.text(), .text()
+@ string, font
+
+
+
+### Draw - Text - Get Width, Height
+
+<cb><v>width<>, <v>height<> = <v>draw<>.textsize('<v>text<>', font = <v>font<>)<>
+
+Usage:
+
+<cb>from PIL.ImageDraw import Draw
+from PIL.ImageFont import truetype
+
+<v>draw<> = Draw(<v>image_1<>)
+<v>width<>, <v>height<> = <v>draw<>.textsize('<v>text<>', font = <v>font<>)
+<v>width<>, <v>height<> = <v>draw<>.textsize('<v>text<>', font = truetype('<v>font_name<>', <v>font_size<>))<>
+
+
+Returns the width and height of the rendered text in pixels.
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+from PIL.ImageFont import truetype
+
+<v>font<> = truetype('<v>Helvetica<>', <v>16<>)
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+<v>draw<> = Draw(<v>image<>)
+<v>width<>, <v>height<> = <v>draw<>.textsize('<v>Image Text<>', font = <v>font<>)
+
+print(f'width x height: {width} x {height}')
+
+<#># Prints: width x height: 79 x 16<><>
+@
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ pil.ImageFont.truetype(), ImageFont.truetype(), .truetype()
+@ draw.text(), .text()
 @ string, font
 
 
 
 # Tools
+@
+@ tools-only
 
 
 ### Color - Get RGB From Hex Value
@@ -1351,7 +1590,7 @@ Draw(<v>image<>).ellipse((40, 10, 120, 90), <v>MAGENTA<>)
 
 <cb>= truetype(<v>font_name<>, <v>font_size<>)<>
 
-Full Form:
+Usage:
 
 <cb>from PIL.ImageFont import truetype
 
@@ -1380,8 +1619,8 @@ from PIL.ImageFont import truetype
 
 
 # How To
-
-@ how-to
+@
+@ how-to, how-tos, how-to-only, how-tos-only
 
 
 
@@ -1591,7 +1830,9 @@ Or Simpler(?):
 @ add
 
 
-# Reference - Types
+# Reference - Data Types
+@
+@ data-type-only, data-types-only
 
 
 ### Color Type
@@ -1716,6 +1957,35 @@ from PIL.ImageDraw import Draw
 
 
 
+### Point Type
+
+<cb>= (<v>x<>, <v>y<>)<>
+
+Defines the x and y co-ordinates of a point.
+
+
+Example:
+
+<cb><v>point<> = (<v>160<>, <v>100<>)
+
+
+
+### Rectangle / Dimensions Type
+
+<cb>= (<v>upper_left_x<>, <v>upper_left_y<>, <v>lower_right_x<>, <v>lower_right_y<>)
+= ((<v>upper_left_x<>, <v>upper_left_y<>), (<v>lower_right_x<>, <v>lower_right_y<>))<>
+
+Defines the top left and bottom right corners of a rectangle.
+
+
+Example:
+
+<cb><v>dimensions<> = (<v>10<>, <v>10<>, <v>160<>, <v>100<>)
+@
+@ box, dimensions
+
+
+
 ### Size Type
 
 <cb>= (<v>width<>, <v>height<>)<>
@@ -1726,7 +1996,7 @@ Defines the size of the image in pixels.
 
 Example:
 
-<cb>size = (<v>160<>, <v>100<>)<>
+<cb><v>size<> = (<v>160<>, <v>100<>)<>
 
 
 
@@ -1735,7 +2005,7 @@ Example:
 Named tuples can be used to make the values easier to work with.
 Here are the principle data types defined as named tuples.
 @
-@ namedtuple
+@ namedtuple, nametuple-only, named-types-only
 
 
 ### Named Tuples - All
@@ -2116,10 +2386,13 @@ print(<v>size_1<>, ":", <v>size_1<>.width, <v>size_1<>.height)
 <col><c>'yellowgreen'<><><col><c>'#9acd32'<><><col><yellowgreen>●<><><>
 @
 @ color types, names, table, chart, colors, colours
+@ colors-only, colours-only, color-only, colour-only, color-names
 
 
 
 # Reference - Filters
+@
+@ filters-only, filter-only
 
 
 ## Filter - Basics
