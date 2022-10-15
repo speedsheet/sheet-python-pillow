@@ -311,6 +311,7 @@ def generate_images(<v>size<>):
 @ image-functions-only, image-function-only, manipulation-only
 
 
+
 ### Image - Create
 
 <cb>= Image.new(<v>mode<>, <v>size<>, <v>color<>)<>
@@ -592,6 +593,23 @@ Draw(<v>image_1<>).rectangle((10, 10, 30, 30), 'lime')
 @ colors, inverse
 
 
+
+### Image - Paste Into Image
+
+<cb>= <v>base_image<>.paste(<v>insert_image<>, (<v>x<>, <v>y<>), <v>insert_image<>)<>
+
+Pastes an image onto another image.
+
+The inserted image must be in RGBA format.
+The base image must NOT contain an alpha channel.
+Transparent areas will let the base image through.
+(<v>x<>, <v>y<>) set the top left position of the inserted image in the base image.
+@
+@ another, background, foreground, paste, merge, copy, insert
+@ image.paste(), .paste()
+
+
+
 ### Image - Mirror Horizontally
 
 <cb>= ImageOps.mirror(<v>image_1<>)<>
@@ -660,10 +678,15 @@ Returns: <c>PIL.Image.Image<>
 
 <c><v>resize_algorithm<><>:
 
-<cb>Image.ANTIALIAS
-Image.LANCZOS
+<cb>Resampling.ANTIALIASED
+Resampling.BICUBIC
+Resampling.BILINEAR
+Resampling.BOX
+Resampling.HAMMING
+Resampling.LANCZOS
+Resampling.NEAREST<>
 
-<s>(others?)<><>
+See: <l "?q=resampling-only">Resampling Filters<> (Below)
 
 
 \#1  -  <c><v>width<><> and <c><v>height<><> must be integers.
@@ -671,7 +694,9 @@ Image.LANCZOS
 
 Example:
 
-<cb><v>resized<> = <v>image_1<>.resize((160, 90), Image.LANCZOS)<>
+<cb><v>resized<> = <v>image_1<>.resize((160, 90), Image.Resampling.LANCZOS)<>
+@
+@ resample
 
 
 ### Image - Rotate
@@ -779,6 +804,34 @@ Draw(<v>image_2<>).ellipse((70, 10, 150, 90), 'lime')
 
 
 
+### Image - To Grey Scale
+
+<cb>= <v>image<>.convert('L')<>
+
+
+Converts an image into grey scale.
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+<v>image<> = Image.new(<v>'RGBA'<>, (<v>160<>, <v>100<>), (64, 64, 64))
+
+<v>draw<> = Draw(<v>image<>)
+<v>draw<>.rectangle((10, 10, 150, 90), fill = (127, 255, 127))
+
+<v>grey_scale<> = <v>image<>.convert('L')
+
+<v>image<>.show()
+<v>grey_scale<>.show()<>
+@
+@ black and white, gray, convert, conversion
+@ image.convert(), 'L'
+
+
+
 ### Image - To List
 
 <cb>= list(<v>image<>.getdata())<>
@@ -810,6 +863,24 @@ from PIL.ImageDraw import Draw
 
 
 
+### Image - To RGB
+
+<cb>= <v>image_1<>.convert('RGB')<>
+@
+@ to, rgb, convert, conversion
+@ image.convert(), .convert(), 'RGB'
+
+
+
+### Image - To RGBA
+
+<cb>= <v>image_1<>.convert('RGBA')<>
+@
+@ to, rgba, convert, conversion
+@ image.convert(), .convert(), 'RGBA'
+
+
+
 ### Image - View
 
 <cb><v>image<>.show()<>
@@ -825,6 +896,7 @@ Shows the image in using the default OS viewer.
 @
 @ property-only, properties-only
 @ image-property-only, image-properties-only
+@ get
 
 
 
@@ -1630,12 +1702,16 @@ Can only be done by super sampling.
 
 <cb><v>antialiased<> = <v>image<>.resize(
 		(<v>width<> // 2, <v>height<> // 2),
-		resample = Image.ANTIALIAS)<>
+		resample = Resampling.LANCZOS)<>
+
+
+Use the Lanczos resampling filter to resample the image.
 
 
 Example:
 
 <cb>from PIL import Image
+from PIL.Image import Resampling
 from PIL.ImageDraw import Draw
 
 <v>width<> = 640
@@ -1652,12 +1728,12 @@ from PIL.ImageDraw import Draw
 
 <v>antialiased<> = image.resize(
 		(<v>width<> // 2, <v>height<> // 2),
-		resample = Image.ANTIALIAS)
+		resample = Resampling.LANCZOS)
 
 <v>antialiased<>.show()<>
 @
-@ antialiasing, antialiased
-@ Image.ANTIALIAS
+@ antialiasing, antialiased, anti-aliasing, anti-aliased
+@ Resampling.ANTIALIAS, resample
 
 
 
@@ -2390,64 +2466,50 @@ print(<v>size_1<>, ":", <v>size_1<>.width, <v>size_1<>.height)
 
 
 
-# Reference - Filters
+# Reference - Resample Filters
 @
-@ filters-only, filter-only
+@ filters-only, filter-only, resample-only, resample-filters-only
 
 
-## Filter - Basics
+## Resample Filter - Basics
 
 Types:
 
-<cb>Image.ANTIALIASED
-Image.BICUBIC
-Image.BILINEAR
-Image.BOX
-Image.HAMMING
-Image.LANCZOS
-Image.NEAREST<>
+<cb>Resampling.ANTIALIASED
+Resampling.BICUBIC
+Resampling.BILINEAR
+Resampling.BOX
+Resampling.HAMMING
+Resampling.LANCZOS
+Resampling.NEAREST<>
 
 Usage:
 
-<cb>from PIL import Image
+<cb>from PIL.Image import Resampling
 
-<v>image<>.resize(<v>...<>, filter = Image.<v>filter<>)<>
+<v>image<>.resize(<v>...<>, filter = Resampling.<v>filter<>)<>
 
 
 ## Filter - Details
 
 
-### Filter - Anti-aliased
-
-<cb>= Image.ANTIALIASED<>
-
-Usage:
-
-<cb>from PIL import Image
-
-= Image.ALIASED<>
-@
-@ Image.ANTIALIASED
-@ resize, thumbnail
-
-
 
 ### Filter - Bicubic
 
-<cb>= Image.BICUBIC<>
+<cb>= Resampling.BICUBIC<>
 
 Usage:
 
-<cb>from PIL import Image
+from PIL.Image import Resampling
 
-= Image.BICUBIC<>
+= Resampling.BICUBIC<>
 
 
 Produces better image quality of all filters except LANCZOS.
 
 Uses cubic interpolation on all pixels.
 @
-@ Image.BICUBIC
+@ Image.Resampling.BICUBIC, Resampling.BICUBIC
 @ resize, thumbnail
 
 
@@ -2458,89 +2520,90 @@ Uses cubic interpolation on all pixels.
 
 Usage:
 
-<cb>from PIL import Image
+from PIL.Image import Resampling
 
-= Image.BILINEAR<>-
+= Resampling.BILINEAR<>-
 
 
 Uses linear interpolation on all pixels.
 @
-@ Image.BILINEAR
+@ Image.Resampling.BILINEAR, Resampling.BILINEAR
 @ resize, thumbnail
 
 
 
 ### Filter - Box
 
-<cb>= Image.BOX<>
+<cb>= Resampling.BOX<>
 
 Usage:
 
-<cb>from PIL import Image
+from PIL.Image import Resampling
 
-= Image.BOX<>
+= Resampling.BOX<>
 
 
 Uses equal weights for each source pixel that contributes to a target pixel.
 @
-@ Image.BOX
+@ Image.Resampling.BOX, Resampling.BOX
 @ resize, thumbnail
 
 
 
 ### Filter - Hamming
 
-<cb>= Image.HAMMING<>
+<cb>= Resampling.HAMMING<>
 
 Usage:
 
-<cb>from PIL import Image
+from PIL.Image import Resampling
 
-= Image.HAMMING<>
+= Resampling.HAMMING<>
 
 
 Produces a sharper image than BILINEAR.
 Doesn't have dislocations on a local level unlike BOX which may.
 @
-@ Image.HAMMING
+@ Image.Resampling.HAMMING, Resampling.HAMMING
 @ resize, thumbnail
 
 
 
 ### Filter - Lanczos
 
-<cb>= Image.LANCZOS<>
+<cb>= Resampling.LANCZOS<>
 
 Usage:
 
-<cb>from PIL import Image
+from PIL.Image import Resampling
 
-= Image.LANCZOS<>
+= Resampling.LANCZOS<>
 
 
 Slowest of the filters but produces the best image quality.
 
 Uses high-quality Lanczos filter (truncated sinc).
+Use this for anti-aliasing.
 @
-@ Image.LANCZOS
-@ resize, thumbnail
+@ Image.Resampling.LANCZOS, Resampling.LANCZOS
+@ resize, thumbnail, Anti-aliased, Anti-aliasing, antialiased, antialiasing, resampling.antialiased,
 
 
 
 ### Filter - Nearest
 
-<cb>= Image.NEAREST<>
+<cb>= Resampling.NEAREST<>
 
 Usage:
 
-<cb>from PIL import Image
+from PIL.Image import Resampling
 
-= Image.NEAREST<>
+= Resampling.NEAREST<>
 
 
 Fastest of the filters, but also produces the worst quality.
 @
-@ Image.NEAREST
+@ Image.Resampling.NEAREST, Resampling.NEAREST
 @ resize, thumbnail
 
 
