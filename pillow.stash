@@ -172,6 +172,42 @@ image = Image.new('RGBA', (160, 100), (127, 255, 0))
 
 
 
+### Image File - Write Icon File
+
+<cb><v>image<>.save(<v>file_path<>)<>
+
+<cb><v>image<>.save(<v>file_path<>, sizes = [(<v>w1<>, <v>h1<>), (<v>w2<>, <v>h2<>), <v>...<>])<>
+
+
+Saves an icon file.
+
+The file must have the extension '.ico'.
+
+Creates these sizes by default:
+
+<cb>[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (255, 255)]<>
+
+
+Example:
+
+<cb>from PIL import Image
+from PIL.ImageDraw import Draw
+
+image = Image.new('RGBA', (256, 256), (64, 64, 64))
+
+draw = Draw(image)
+draw.ellipse((16, 16, 240, 240), (127, 255, 127))
+
+<v>image<>.save(
+	"<v>iconic.ico<>",
+	sizes=[(256, 256), (128, 128), (32, 32), (16, 16)]
+)<>
+@
+@ .save(), save
+@ .ico, ico, multiple images
+
+
+
 ### Image File - Write Animated
 
 <cb><v>images<>[0].save(<v>file_name<>, append_images = <v>images<>[1:])<>
@@ -186,6 +222,9 @@ image = Image.new('RGBA', (160, 100), (127, 255, 0))
 
 
 Writes a list of images to an animated image file for types gif and webp.
+
+Start by calling <c>.save()<> on the first image.
+Then include the additional images in the <c>append_images<> parameter.
 
 Delete the previous image or your images will be appended to it.
 
@@ -230,7 +269,7 @@ def add_circle(<v>image<>, dimensions):
 		optimize = True)<>
 @
 @ .save(), save
-@ gifs, webp
+@ gifs, webp, multiple images, frame
 
 
 
@@ -248,6 +287,9 @@ def add_circle(<v>image<>, dimensions):
 
 
 Writes a list of images to an animated image file for types gif and webp.
+
+Start by calling <c>.save()<> on the first image.
+Then include the additional images in the <c>append_images<> parameter.
 
 Includes individual durations for each image slice.
 Delete the previous image or your images will be appended to it.
@@ -302,7 +344,7 @@ def generate_images(<v>size<>):
 		optimize = True)<>
 @
 @ .save(), save
-@ gifs, webp
+@ gifs, webp, multiple images, frame
 
 
 
@@ -670,7 +712,7 @@ Draw(<v>image_1<>).rectangle((10, 10, 30, 30), 'lime')
 
 ### Image - Resize
 
-<cb><v>image_1<>.resize((<v>width<>, <v>height<>), <v>resize_algorithm<>)		<#>#1<><>
+<cb>= <v>image_1<>.resize((<v>width<>, <v>height<>), <v>resize_algorithm<>)	<#>#1<><>
 
 
 Returns: <c>PIL.Image.Image<>
@@ -1047,6 +1089,21 @@ from PIL.ImageDraw import Draw
 @ arcs, circumference, curve
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
 @ draw.chord(), .chord()
+
+
+
+### Draw - Circle
+
+<cb><v>draw_1<>.ellipse(<v>dimensions<>, <v>fill_color<>)<>
+
+<cb><v>draw_1<>.ellipse((<v>x1<>, <v>y1<>, <v>x2<>, <v>y2<>), <v>fill_color<>)<>
+
+
+Use <c>.ellipse()<> to create a circle.
+@
+@ fill, circles
+@ pil.imagedraw.draw(), imagedraw.draw(), .draw()
+@ draw.ellipse(),.ellipse()
 
 
 
@@ -1580,7 +1637,7 @@ print(f'width x height: {width} x {height}')
 @ pil.imagedraw.draw(), imagedraw.draw(), .draw()
 @ pil.ImageFont.truetype(), ImageFont.truetype(), .truetype()
 @ draw.text(), .text()
-@ string, font
+@ string, font, size
 
 
 
@@ -2008,10 +2065,10 @@ You can use a standard web color name passed as a string.
 
 Example:
 
-<in><card><table><col><c>'Red'<><><col><red>●<><>
-<col><c>'DarkRed'<><><col><darkred>●<><>
-<col><c>'Crimson'<><><col><crimson>●<><>
-<col><c>'Firebrick'<><><col><firebrick>●<><><><><>
+<in><card><table><col><c>'Red'<><><col><on red>    <><>
+<col><c>'DarkRed'<><><col><on darkred>    <><>
+<col><c>'Crimson'<><><col><on crimson>    <><>
+<col><c>'Firebrick'<><><col><on firebrick>    <><><><><>
 
 
 See full list of color names below:
@@ -2312,154 +2369,155 @@ print(<v>size_1<>, ":", <v>size_1<>.width, <v>size_1<>.height)
 
 # Reference - Color Names
 
-<table><col><c>'aliceblue'<><><col><c>'#f0f8ff'		<><><col><aliceblue>●<><>
-<col><c>'antiquewhite'<><><col><c>'#faebd7'<><><col><antiquewhite>●<><>
-<col><c>'aqua'<><><col><c>'#00ffff'<><><col><aqua>●<><>
-<col><c>'aquamarine'<><><col><c>'#7fffd4'<><><col><aquamarine>●<><>
-<col><c>'azure'<><><col><c>'#f0ffff'<><><col><azure>●<><>
-<col><c>'beige'<><><col><c>'#f5f5dc'<><><col><beige>●<><>
-<col><c>'bisque'<><><col><c>'#ffe4c4'<><><col><bisque>●<><>
-<col><c>'black'<><><col><c>'#000000'<><><col><black>●<><>
-<col><c>'blanchedalmond'<><><col><c>'#ffebcd'<><><col><blanchedalmond>●<><>
-<col><c>'blue'<><><col><c>'#0000ff'<><><col><blue>●<><>
-<col><c>'blueviolet'<><><col><c>'#8a2be2'<><><col><blueviolet>●<><>
-<col><c>'brown'<><><col><c>'#a52a2a'<><><col><brown>●<><>
-<col><c>'burlywood'<><><col><c>'#deb887'<><><col><burlywood>●<><>
-<col><c>'cadetblue'<><><col><c>'#5f9ea0'<><><col><cadetblue>●<><>
-<col><c>'chartreuse'<><><col><c>'#7fff00'<><><col><chartreuse>●<><>
-<col><c>'chocolate'<><><col><c>'#d2691e'<><><col><chocolate>●<><>
-<col><c>'coral'<><><col><c>'#ff7f50'<><><col><coral>●<><>
-<col><c>'cornflowerblue'<><><col><c>'#6495ed'<><><col><cornflowerblue>●<><>
-<col><c>'cornsilk'<><><col><c>'#fff8dc'<><><col><cornsilk>●<><>
-<col><c>'crimson'<><><col><c>'#dc143c'<><><col><crimson>●<><>
-<col><c>'cyan'<><><col><c>'#00ffff'<><><col><cyan>●<><>
-<col><c>'darkblue'<><><col><c>'#00008b'<><><col><darkblue>●<><>
-<col><c>'darkcyan'<><><col><c>'#008b8b'<><><col><darkcyan>●<><>
-<col><c>'darkgoldenrod'<><><col><c>'#b8860b'<><><col><darkgoldenrod>●<><>
-<col><c>'darkgray'<><><col><c>'#a9a9a9'<><><col><darkgray>●<><>
-<col><c>'darkgrey'<><><col><c>'#a9a9a9'<><><col><darkgray>●<><>
-<col><c>'darkgreen'<><><col><c>'#006400'<><><col><darkgreen>●<><>
-<col><c>'darkkhaki'<><><col><c>'#bdb76b'<><><col><darkkhaki>●<><>
-<col><c>'darkmagenta'<><><col><c>'#8b008b'<><><col><darkmagenta>●<><>
-<col><c>'darkolivegreen'<><><col><c>'#556b2f'<><><col><darkolivegreen>●<><>
-<col><c>'darkorange'<><><col><c>'#ff8c00'<><><col><darkorange>●<><>
-<col><c>'darkorchid'<><><col><c>'#9932cc'<><><col><darkorchid>●<><>
-<col><c>'darkred'<><><col><c>'#8b0000'<><><col><darkred>●<><>
-<col><c>'darksalmon'<><><col><c>'#e9967a'<><><col><darksalmon>●<><>
-<col><c>'darkseagreen'<><><col><c>'#8fbc8f'<><><col><darkseagreen>●<><>
-<col><c>'darkslateblue'<><><col><c>'#483d8b'<><><col><darkslateblue>●<><>
-<col><c>'darkslategray'<><><col><c>'#2f4f4f'<><><col><darkslategray>●<><>
-<col><c>'darkslategrey'<><><col><c>'#2f4f4f'<><><col><darkslategray>●<><>
-<col><c>'darkturquoise'<><><col><c>'#00ced1'<><><col><darkturquoise>●<><>
-<col><c>'darkviolet'<><><col><c>'#9400d3'<><><col><darkviolet>●<><>
-<col><c>'deeppink'<><><col><c>'#ff1493'<><><col><deeppink>●<><>
-<col><c>'deepskyblue'<><><col><c>'#00bfff'<><><col><deepskyblue>●<><>
-<col><c>'dimgray'<><><col><c>'#696969'<><><col><dimgray>●<><>
-<col><c>'dimgrey'<><><col><c>'#696969'<><><col><dimgray>●<><>
-<col><c>'dodgerblue'<><><col><c>'#1e90ff'<><><col><dodgerblue>●<><>
-<col><c>'firebrick'<><><col><c>'#b22222'<><><col><firebrick>●<><>
-<col><c>'floralwhite'<><><col><c>'#fffaf0'<><><col><floralwhite>●<><>
-<col><c>'forestgreen'<><><col><c>'#228b22'<><><col><forestgreen>●<><>
-<col><c>'fuchsia'<><><col><c>'#ff00ff'<><><col><fuchsia>●<><>
-<col><c>'gainsboro'<><><col><c>'#dcdcdc'<><><col><gainsboro>●<><>
-<col><c>'ghostwhite'<><><col><c>'#f8f8ff'<><><col><ghostwhite>●<><>
-<col><c>'gold'<><><col><c>'#ffd700'<><><col><gold>●<><>
-<col><c>'goldenrod'<><><col><c>'#daa520'<><><col><goldenrod>●<><>
-<col><c>'gray'<><><col><c>'#808080'<><><col><gray>●<><>
-<col><c>'grey'<><><col><c>'#808080'<><><col><gray>●<><>
-<col><c>'green'<><><col><c>'#008000'<><><col><green>●<><>
-<col><c>'greenyellow'<><><col><c>'#adff2f'<><><col><greenyellow>●<><>
-<col><c>'honeydew'<><><col><c>'#f0fff0'<><><col><honeydew>●<><>
-<col><c>'hotpink'<><><col><c>'#ff69b4'<><><col><hotpink>●<><>
-<col><c>'indianred'<><><col><c>'#cd5c5c'<><><col><indianred>●<><>
-<col><c>'indigo'<><><col><c>'#4b0082'<><><col><indigo>●<><>
-<col><c>'ivory'<><><col><c>'#fffff0'<><><col><ivory>●<><>
-<col><c>'khaki'<><><col><c>'#f0e68c'<><><col><khaki>●<><>
-<col><c>'lavender'<><><col><c>'#e6e6fa'<><><col><lavender>●<><>
-<col><c>'lavenderblush'<><><col><c>'#fff0f5'<><><col><lavenderblush>●<><>
-<col><c>'lawngreen'<><><col><c>'#7cfc00'<><><col><lawngreen>●<><>
-<col><c>'lemonchiffon'<><><col><c>'#fffacd'<><><col><lemonchiffon>●<><>
-<col><c>'lightblue'<><><col><c>'#add8e6'<><><col><lightblue>●<><>
-<col><c>'lightcoral'<><><col><c>'#f08080'<><><col><lightcoral>●<><>
-<col><c>'lightcyan'<><><col><c>'#e0ffff'<><><col><lightcyan>●<><>
-<col><c>'lightgoldenrodyellow'<><><col><c>'#fafad2'<><><col><lightgoldenrodyellow>●<><>
-<col><c>'lightgreen'<><><col><c>'#90ee90'<><><col><lightgreen>●<><>
-<col><c>'lightgray'<><><col><c>'#d3d3d3'<><><col><lightgray>●<><>
-<col><c>'lightgrey'<><><col><c>'#d3d3d3'<><><col><lightgray>●<><>
-<col><c>'lightpink'<><><col><c>'#ffb6c1'<><><col><lightpink>●<><>
-<col><c>'lightsalmon'<><><col><c>'#ffa07a'<><><col><lightsalmon>●<><>
-<col><c>'lightseagreen'<><><col><c>'#20b2aa'<><><col><lightseagreen>●<><>
-<col><c>'lightskyblue'<><><col><c>'#87cefa'<><><col><lightskyblue>●<><>
-<col><c>'lightslategray'<><><col><c>'#778899'<><><col><lightslategray>●<><>
-<col><c>'lightslategrey'<><><col><c>'#778899'<><><col><lightslategray>●<><>
-<col><c>'lightsteelblue'<><><col><c>'#b0c4de'<><><col><lightsteelblue>●<><>
-<col><c>'lightyellow'<><><col><c>'#ffffe0'<><><col><lightyellow>●<><>
-<col><c>'lime'<><><col><c>'#00ff00'<><><col><lime>●<><>
-<col><c>'limegreen'<><><col><c>'#32cd32'<><><col><limegreen>●<><>
-<col><c>'linen'<><><col><c>'#faf0e6'<><><col><linen>●<><>
-<col><c>'magenta'<><><col><c>'#ff00ff'<><><col><magenta>●<><>
-<col><c>'maroon'<><><col><c>'#800000'<><><col><maroon>●<><>
-<col><c>'mediumaquamarine'<><><col><c>'#66cdaa'<><><col><mediumaquamarine>●<><>
-<col><c>'mediumblue'<><><col><c>'#0000cd'<><><col><mediumblue>●<><>
-<col><c>'mediumorchid'<><><col><c>'#ba55d3'<><><col><mediumorchid>●<><>
-<col><c>'mediumpurple'<><><col><c>'#9370db'<><><col><mediumpurple>●<><>
-<col><c>'mediumseagreen'<><><col><c>'#3cb371'<><><col><mediumseagreen>●<><>
-<col><c>'mediumslateblue'<><><col><c>'#7b68ee'<><><col><mediumslateblue>●<><>
-<col><c>'mediumspringgreen'<><><col><c>'#00fa9a'<><><col><mediumspringgreen>●<><>
-<col><c>'mediumturquoise'<><><col><c>'#48d1cc'<><><col><mediumturquoise>●<><>
-<col><c>'mediumvioletred'<><><col><c>'#c71585'<><><col><mediumvioletred>●<><>
-<col><c>'midnightblue'<><><col><c>'#191970'<><><col><midnightblue>●<><>
-<col><c>'mintcream'<><><col><c>'#f5fffa'<><><col><mintcream>●<><>
-<col><c>'mistyrose'<><><col><c>'#ffe4e1'<><><col><mistyrose>●<><>
-<col><c>'moccasin'<><><col><c>'#ffe4b5'<><><col><moccasin>●<><>
-<col><c>'navajowhite'<><><col><c>'#ffdead'<><><col><navajowhite>●<><>
-<col><c>'navy'<><><col><c>'#000080'<><><col><navy>●<><>
-<col><c>'oldlace'<><><col><c>'#fdf5e6'<><><col><oldlace>●<><>
-<col><c>'olive'<><><col><c>'#808000'<><><col><olive>●<><>
-<col><c>'olivedrab'<><><col><c>'#6b8e23'<><><col><olivedrab>●<><>
-<col><c>'orange'<><><col><c>'#ffa500'<><><col><orange>●<><>
-<col><c>'orangered'<><><col><c>'#ff4500'<><><col><orangered>●<><>
-<col><c>'orchid'<><><col><c>'#da70d6'<><><col><orchid>●<><>
-<col><c>'palegoldenrod'<><><col><c>'#eee8aa'<><><col><palegoldenrod>●<><>
-<col><c>'palegreen'<><><col><c>'#98fb98'<><><col><palegreen>●<><>
-<col><c>'paleturquoise'<><><col><c>'#afeeee'<><><col><paleturquoise>●<><>
-<col><c>'palevioletred'<><><col><c>'#db7093'<><><col><palevioletred>●<><>
-<col><c>'papayawhip'<><><col><c>'#ffefd5'<><><col><papayawhip>●<><>
-<col><c>'peachpuff'<><><col><c>'#ffdab9'<><><col><peachpuff>●<><>
-<col><c>'peru'<><><col><c>'#cd853f'<><><col><peru>●<><>
-<col><c>'pink'<><><col><c>'#ffc0cb'<><><col><pink>●<><>
-<col><c>'plum'<><><col><c>'#dda0dd'<><><col><plum>●<><>
-<col><c>'powderblue'<><><col><c>'#b0e0e6'<><><col><powderblue>●<><>
-<col><c>'purple'<><><col><c>'#800080'<><><col><purple>●<><>
-<col><c>'rebeccapurple'<><><col><c>'#663399'<><><col><rebeccapurple>●<><>
-<col><c>'red'<><><col><c>'#ff0000'<><><col><red>●<><>
-<col><c>'rosybrown'<><><col><c>'#bc8f8f'<><><col><rosybrown>●<><>
-<col><c>'royalblue'<><><col><c>'#4169e1'<><><col><royalblue>●<><>
-<col><c>'saddlebrown'<><><col><c>'#8b4513'<><><col><saddlebrown>●<><>
-<col><c>'salmon'<><><col><c>'#fa8072'<><><col><salmon>●<><>
-<col><c>'sandybrown'<><><col><c>'#f4a460'<><><col><sandybrown>●<><>
-<col><c>'seagreen'<><><col><c>'#2e8b57'<><><col><seagreen>●<><>
-<col><c>'seashell'<><><col><c>'#fff5ee'<><><col><seashell>●<><>
-<col><c>'sienna'<><><col><c>'#a0522d'<><><col><sienna>●<><>
-<col><c>'silver'<><><col><c>'#c0c0c0'<><><col><silver>●<><>
-<col><c>'skyblue'<><><col><c>'#87ceeb'<><><col><skyblue>●<><>
-<col><c>'slateblue'<><><col><c>'#6a5acd'<><><col><slateblue>●<><>
-<col><c>'slategray'<><><col><c>'#708090'<><><col><slategray>●<><>
-<col><c>'slategrey'<><><col><c>'#708090'<><><col><slategray>●<><>
-<col><c>'snow'<><><col><c>'#fffafa'<><><col><snow>●<><>
-<col><c>'springgreen'<><><col><c>'#00ff7f'<><><col><springgreen>●<><>
-<col><c>'steelblue'<><><col><c>'#4682b4'<><><col><steelblue>●<><>
-<col><c>'tan'<><><col><c>'#d2b48c'<><><col><tan>●<><>
-<col><c>'teal'<><><col><c>'#008080'<><><col><teal>●<><>
-<col><c>'thistle'<><><col><c>'#d8bfd8'<><><col><thistle>●<><>
-<col><c>'tomato'<><><col><c>'#ff6347'<><><col><tomato>●<><>
-<col><c>'turquoise'<><><col><c>'#40e0d0'<><><col><turquoise>●<><>
-<col><c>'violet'<><><col><c>'#ee82ee'<><><col><violet>●<><>
-<col><c>'wheat'<><><col><c>'#f5deb3'<><><col><wheat>●<><>
-<col><c>'white'<><><col><c>'#ffffff'<><><col><white>●<><>
-<col><c>'whitesmoke'<><><col><c>'#f5f5f5'<><><col><whitesmoke>●<><>
-<col><c>'yellow'<><><col><c>'#ffff00'<><><col><yellow>●<><>
-<col><c>'yellowgreen'<><><col><c>'#9acd32'<><><col><yellowgreen>●<><><>
+<table><col><c>'aliceblue'<><><col><c>'#f0f8ff'		<><><col><on aliceblue>    <><>
+<col><c>'antiquewhite'<><><col><c>'#faebd7'<><><col><on antiquewhite>    <><>
+<col><c>'aqua'<><><col><c>'#00ffff'<><><col><on aqua>    <><>
+<col><c>'aquamarine'<><><col><c>'#7fffd4'<><><col><on aquamarine>    <><>
+<col><c>'azure'<><><col><c>'#f0ffff'<><><col><on azure>    <><>
+<col><c>'beige'<><><col><c>'#f5f5dc'<><><col><on beige>    <><>
+<col><c>'bisque'<><><col><c>'#ffe4c4'<><><col><on bisque>    <><>
+<col><c>'black'<><><col><c>'#000000'<><><col><on black>    <><>
+<col><c>'blanchedalmond'<><><col><c>'#ffebcd'<><><col><on blanchedalmond>    <><>
+<col><c>'blue'<><><col><c>'#0000ff'<><><col><on blue>    <><>
+<col><c>'blueviolet'<><><col><c>'#8a2be2'<><><col><on blueviolet>    <><>
+<col><c>'brown'<><><col><c>'#a52a2a'<><><col><on brown>    <><>
+<col><c>'burlywood'<><><col><c>'#deb887'<><><col><on burlywood>    <><>
+<col><c>'cadetblue'<><><col><c>'#5f9ea0'<><><col><on cadetblue>    <><>
+<col><c>'chartreuse'<><><col><c>'#7fff00'<><><col><on chartreuse>    <><>
+<col><c>'chocolate'<><><col><c>'#d2691e'<><><col><on chocolate>    <><>
+<col><c>'coral'<><><col><c>'#ff7f50'<><><col><on coral>    <><>
+<col><c>'cornflowerblue'<><><col><c>'#6495ed'<><><col><on cornflowerblue>    <><>
+<col><c>'cornsilk'<><><col><c>'#fff8dc'<><><col><on cornsilk>    <><>
+<col><c>'crimson'<><><col><c>'#dc143c'<><><col><on crimson>    <><>
+<col><c>'cyan'<><><col><c>'#00ffff'<><><col><on cyan>    <><>
+<col><c>'darkblue'<><><col><c>'#00008b'<><><col><on darkblue>    <><>
+<col><c>'darkcyan'<><><col><c>'#008b8b'<><><col><on darkcyan>    <><>
+<col><c>'darkgoldenrod'<><><col><c>'#b8860b'<><><col><on darkgoldenrod>    <><>
+<col><c>'darkgray'<><><col><c>'#a9a9a9'<><><col><on darkgray>    <><>
+<col><c>'darkgrey'<><><col><c>'#a9a9a9'<><><col><on darkgray>    <><>
+<col><c>'darkgreen'<><><col><c>'#006400'<><><col><on darkgreen>    <><>
+<col><c>'darkkhaki'<><><col><c>'#bdb76b'<><><col><on darkkhaki>    <><>
+<col><c>'darkmagenta'<><><col><c>'#8b008b'<><><col><on darkmagenta>    <><>
+<col><c>'darkolivegreen'<><><col><c>'#556b2f'<><><col><on darkolivegreen>    <><>
+<col><c>'darkorange'<><><col><c>'#ff8c00'<><><col><on darkorange>    <><>
+<col><c>'darkorchid'<><><col><c>'#9932cc'<><><col><on darkorchid>    <><>
+<col><c>'darkred'<><><col><c>'#8b0000'<><><col><on darkred>    <><>
+<col><c>'darksalmon'<><><col><c>'#e9967a'<><><col><on darksalmon>    <><>
+<col><c>'darkseagreen'<><><col><c>'#8fbc8f'<><><col><on darkseagreen>    <><>
+<col><c>'darkslateblue'<><><col><c>'#483d8b'<><><col><on darkslateblue>    <><>
+<col><c>'darkslategray'<><><col><c>'#2f4f4f'<><><col><on darkslategray>    <><>
+<col><c>'darkslategrey'<><><col><c>'#2f4f4f'<><><col><on darkslategray>    <><>
+<col><c>'darkturquoise'<><><col><c>'#00ced1'<><><col><on darkturquoise>    <><>
+<col><c>'darkviolet'<><><col><c>'#9400d3'<><><col><on darkviolet>    <><>
+<col><c>'deeppink'<><><col><c>'#ff1493'<><><col><on deeppink>    <><>
+<col><c>'deepskyblue'<><><col><c>'#00bfff'<><><col><on deepskyblue>    <><>
+<col><c>'dimgray'<><><col><c>'#696969'<><><col><on dimgray>    <><>
+<col><c>'dimgrey'<><><col><c>'#696969'<><><col><on dimgray>    <><>
+<col><c>'dodgerblue'<><><col><c>'#1e90ff'<><><col><on dodgerblue>    <><>
+<col><c>'firebrick'<><><col><c>'#b22222'<><><col><on firebrick>    <><>
+<col><c>'floralwhite'<><><col><c>'#fffaf0'<><><col><on floralwhite>    <><>
+<col><c>'forestgreen'<><><col><c>'#228b22'<><><col><on forestgreen>    <><>
+<col><c>'fuchsia'<><><col><c>'#ff00ff'<><><col><on fuchsia>    <><>
+<col><c>'gainsboro'<><><col><c>'#dcdcdc'<><><col><on gainsboro>    <><>
+<col><c>'ghostwhite'<><><col><c>'#f8f8ff'<><><col><on ghostwhite>    <><>
+<col><c>'gold'<><><col><c>'#ffd700'<><><col><on gold>    <><>
+<col><c>'goldenrod'<><><col><c>'#daa520'<><><col><on goldenrod>    <><>
+<col><c>'gray'<><><col><c>'#808080'<><><col><on gray>    <><>
+<col><c>'grey'<><><col><c>'#808080'<><><col><on gray>    <><>
+<col><c>'green'<><><col><c>'#008000'<><><col><on green>    <><>
+<col><c>'greenyellow'<><><col><c>'#adff2f'<><><col><on greenyellow>    <><>
+<col><c>'honeydew'<><><col><c>'#f0fff0'<><><col><on honeydew>    <><>
+<col><c>'hotpink'<><><col><c>'#ff69b4'<><><col><on hotpink>    <><>
+<col><c>'indianred'<><><col><c>'#cd5c5c'<><><col><on indianred>    <><>
+<col><c>'indigo'<><><col><c>'#4b0082'<><><col><on indigo>    <><>
+<col><c>'ivory'<><><col><c>'#fffff0'<><><col><on ivory>    <><>
+<col><c>'khaki'<><><col><c>'#f0e68c'<><><col><on khaki>    <><>
+<col><c>'lavender'<><><col><c>'#e6e6fa'<><><col><on lavender>    <><>
+<col><c>'lavenderblush'<><><col><c>'#fff0f5'<><><col><on lavenderblush>    <><>
+<col><c>'lawngreen'<><><col><c>'#7cfc00'<><><col><on lawngreen>    <><>
+<col><c>'lemonchiffon'<><><col><c>'#fffacd'<><><col><on lemonchiffon>    <><>
+<col><c>'lightblue'<><><col><c>'#add8e6'<><><col><on lightblue>    <><>
+<col><c>'lightcoral'<><><col><c>'#f08080'<><><col><on lightcoral>    <><>
+<col><c>'lightcyan'<><><col><c>'#e0ffff'<><><col><on lightcyan>    <><>
+<col><c>'lightgoldenrodyellow'<><><col><c>'#fafad2'<><><col><on lightgoldenrodyellow>    <><>
+<col><c>'lightgreen'<><><col><c>'#90ee90'<><><col><on lightgreen>    <><>
+<col><c>'lightgray'<><><col><c>'#d3d3d3'<><><col><on lightgray>    <><>
+<col><c>'lightgrey'<><><col><c>'#d3d3d3'<><><col><on lightgray>    <><>
+<col><c>'lightpink'<><><col><c>'#ffb6c1'<><><col><on lightpink>    <><>
+<col><c>'lightsalmon'<><><col><c>'#ffa07a'<><><col><on lightsalmon>    <><>
+<col><c>'lightseagreen'<><><col><c>'#20b2aa'<><><col><on lightseagreen>    <><>
+<col><c>'lightskyblue'<><><col><c>'#87cefa'<><><col><on lightskyblue>    <><>
+<col><c>'lightslategray'<><><col><c>'#778899'<><><col><on lightslategray>    <><>
+<col><c>'lightslategrey'<><><col><c>'#778899'<><><col><on lightslategray>    <><>
+<col><c>'lightsteelblue'<><><col><c>'#b0c4de'<><><col><on lightsteelblue>    <><>
+<col><c>'lightyellow'<><><col><c>'#ffffe0'<><><col><on lightyellow>    <><>
+<col><c>'lime'<><><col><c>'#00ff00'<><><col><on lime>    <><>
+<col><c>'limegreen'<><><col><c>'#32cd32'<><><col><on limegreen>    <><>
+<col><c>'linen'<><><col><c>'#faf0e6'<><><col><on linen>    <><>
+<col><c>'magenta'<><><col><c>'#ff00ff'<><><col><on magenta>    <><>
+<col><c>'maroon'<><><col><c>'#800000'<><><col><on maroon>    <><>
+<col><c>'mediumaquamarine'<><><col><c>'#66cdaa'<><><col><on mediumaquamarine>    <><>
+<col><c>'mediumblue'<><><col><c>'#0000cd'<><><col><on mediumblue>    <><>
+<col><c>'mediumorchid'<><><col><c>'#ba55d3'<><><col><on mediumorchid>    <><>
+<col><c>'mediumpurple'<><><col><c>'#9370db'<><><col><on mediumpurple>    <><>
+<col><c>'mediumseagreen'<><><col><c>'#3cb371'<><><col><on mediumseagreen>    <><>
+<col><c>'mediumslateblue'<><><col><c>'#7b68ee'<><><col><on mediumslateblue>    <><>
+<col><c>'mediumspringgreen'<><><col><c>'#00fa9a'<><><col><on mediumspringgreen>    <><>
+<col><c>'mediumturquoise'<><><col><c>'#48d1cc'<><><col><on mediumturquoise>    <><>
+<col><c>'mediumvioletred'<><><col><c>'#c71585'<><><col><on mediumvioletred>    <><>
+<col><c>'midnightblue'<><><col><c>'#191970'<><><col><on midnightblue>    <><>
+<col><c>'mintcream'<><><col><c>'#f5fffa'<><><col><on mintcream>    <><>
+<col><c>'mistyrose'<><><col><c>'#ffe4e1'<><><col><on mistyrose>    <><>
+<col><c>'moccasin'<><><col><c>'#ffe4b5'<><><col><on moccasin>    <><>
+<col><c>'navajowhite'<><><col><c>'#ffdead'<><><col><on navajowhite>    <><>
+<col><c>'navy'<><><col><c>'#000080'<><><col><on navy>    <><>
+<col><c>'oldlace'<><><col><c>'#fdf5e6'<><><col><on oldlace>    <><>
+<col><c>'olive'<><><col><c>'#808000'<><><col><on olive>    <><>
+<col><c>'olivedrab'<><><col><c>'#6b8e23'<><><col><on olivedrab>    <><>
+<col><c>'orange'<><><col><c>'#ffa500'<><><col><on orange>    <><>
+<col><c>'orangered'<><><col><c>'#ff4500'<><><col><on orangered>    <><>
+<col><c>'orchid'<><><col><c>'#da70d6'<><><col><on orchid>    <><>
+<col><c>'palegoldenrod'<><><col><c>'#eee8aa'<><><col><on palegoldenrod>    <><>
+<col><c>'palegreen'<><><col><c>'#98fb98'<><><col><on palegreen>    <><>
+<col><c>'paleturquoise'<><><col><c>'#afeeee'<><><col><on paleturquoise>    <><>
+<col><c>'palevioletred'<><><col><c>'#db7093'<><><col><on palevioletred>    <><>
+<col><c>'papayawhip'<><><col><c>'#ffefd5'<><><col><on papayawhip>    <><>
+<col><c>'peachpuff'<><><col><c>'#ffdab9'<><><col><on peachpuff>    <><>
+<col><c>'peru'<><><col><c>'#cd853f'<><><col><on peru>    <><>
+<col><c>'pink'<><><col><c>'#ffc0cb'<><><col><on pink>    <><>
+<col><c>'plum'<><><col><c>'#dda0dd'<><><col><on plum>    <><>
+<col><c>'powderblue'<><><col><c>'#b0e0e6'<><><col><on powderblue>    <><>
+<col><c>'purple'<><><col><c>'#800080'<><><col><on purple>    <><>
+<col><c>'rebeccapurple'<><><col><c>'#663399'<><><col><on rebeccapurple>    <><>
+<col><c>'red'<><><col><c>'#ff0000'<><><col><on red>    <><>
+<col><c>'rosybrown'<><><col><c>'#bc8f8f'<><><col><on rosybrown>    <><>
+<col><c>'royalblue'<><><col><c>'#4169e1'<><><col><on royalblue>    <><>
+<col><c>'saddlebrown'<><><col><c>'#8b4513'<><><col><on saddlebrown>    <><>
+<col><c>'salmon'<><><col><c>'#fa8072'<><><col><on salmon>    <><>
+<col><c>'sandybrown'<><><col><c>'#f4a460'<><><col><on sandybrown>    <><>
+<col><c>'seagreen'<><><col><c>'#2e8b57'<><><col><on seagreen>    <><>
+<col><c>'seashell'<><><col><c>'#fff5ee'<><><col><on seashell>    <><>
+<col><c>'sienna'<><><col><c>'#a0522d'<><><col><on sienna>    <><>
+<col><c>'silver'<><><col><c>'#c0c0c0'<><><col><on silver>    <><>
+<col><c>'skyblue'<><><col><c>'#87ceeb'<><><col><on skyblue>    <><>
+<col><c>'slateblue'<><><col><c>'#6a5acd'<><><col><on slateblue>    <><>
+<col><c>'slategray'<><><col><c>'#708090'<><><col><on slategray>    <><>
+<col><c>'slategrey'<><><col><c>'#708090'<><><col><on slategray>    <><>
+<col><c>'snow'<><><col><c>'#fffafa'<><><col><on snow>    <><>
+<col><c>'springgreen'<><><col><c>'#00ff7f'<><><col><on springgreen>    <><>
+<col><c>'steelblue'<><><col><c>'#4682b4'<><><col><on steelblue>    <><>
+<col><c>'tan'<><><col><c>'#d2b48c'<><><col><on tan>    <><>
+<col><c>'teal'<><><col><c>'#008080'<><><col><on teal>    <><>
+<col><c>'thistle'<><><col><c>'#d8bfd8'<><><col><on thistle>    <><>
+<col><c>'tomato'<><><col><c>'#ff6347'<><><col><on tomato>    <><>
+<col><c>'turquoise'<><><col><c>'#40e0d0'<><><col><on turquoise>    <><>
+<col><c>'violet'<><><col><c>'#ee82ee'<><><col><on violet>    <><>
+<col><c>'wheat'<><><col><c>'#f5deb3'<><><col><on wheat>    <><>
+<col><c>'white'<><><col><c>'#ffffff'<><><col><on white>    <><>
+<col><c>'whitesmoke'<><><col><c>'#f5f5f5'<><><col><on whitesmoke>    <><>
+<col><c>'yellow'<><><col><c>'#ffff00'<><><col><on yellow>    <><>
+<col><c>'yellowgreen'<><><col><c>'#9acd32'<><><col><on yellowgreen>    <><>
+<>
 @
 @ color types, names, table, chart, colors, colours
 @ colors-only, colours-only, color-only, colour-only, color-names
